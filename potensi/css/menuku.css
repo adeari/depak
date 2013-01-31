@@ -1,0 +1,80 @@
+/* 
+    Document   : menuku
+    Created on : Jun 25, 2012, 8:19:53 PM
+    Author     : newDomas
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.menuku{
+ border:none;
+ border:0px;
+	margin:0px;
+	padding:0px;
+	font: 67.5% Verdana, Helvetica, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.menuku ul{
+	background:#333333;
+	height:35px;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.menuku li{  float:left;  padding:0px; }
+.menuku li a{
+background:#333333 url("seperator.gif") bottom right no-repeat;
+color:#cccccc;
+display:block;
+font-weight:normal;
+line-height:35px;
+margin:0px;
+padding:0px 25px;
+text-align:center;
+text-decoration:none;
+}
+.menuku li a:hover, .menuku ul li:hover a{
+background: #2580a2 url("hover.gif") bottom center no-repeat;
+color:#FFFFFF;
+text-decoration:none;
+}
+.menuku li ul{
+background:#333333;
+display:none;
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:225px;
+z-index:200;
+}
+.menuku li:hover ul{ display:block; }
+
+.menuku li li {
+background:url('sub_sep.gif') bottom left no-repeat;
+display:block;
+float:none;
+margin:0px;
+padding:0px;
+width:225px;
+}
+.menuku li:hover li a{ background:none; 	}
+
+.menuku li ul a{
+display:block;
+height:35px;
+font-size:12px;
+font-style:normal;
+margin:0px;
+padding:0px 10px 0px 15px;
+text-align:left;
+}
+.menuku li ul a:hover, .menuku li ul li:hover a{
+background:#2580a2 url('hover_sub.gif') center left no-repeat;
+border:0px;
+color:#ffffff;
+text-decoration:none;
+}
+.menuku p{ clear:left; }
