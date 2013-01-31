@@ -111,7 +111,7 @@ class Search extends CI_Controller{
             }else{
                 $asets = $this->Aset_model->getAllByPropinsi($this->limit,$offset,$propinsiID,$ranting,$jenis,$status,$bukti,$pengelola);
                 $num_rows = $this->Aset_model->countAllByPropinsi($propinsiID,$ranting,$jenis,$status,$bukti,$pengelola);
-                $rec = $this->Aset_model->countRowByPropinsi($this->limit,$offset,$ranting,$jenis,$status,$bukti,$pengelola);
+                $rec = $this->Aset_model->countRowByPropinsi($this->limit,$offset,$propinsiID,$ranting,$jenis,$status,$bukti,$pengelola);
             }
         }else{
             $asets = $this->Aset_model->getAll($this->limit,$offset,$ranting,$jenis,$status,$bukti,$pengelola);
