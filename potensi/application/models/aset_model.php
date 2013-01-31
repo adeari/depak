@@ -16,12 +16,12 @@ class Aset_model extends CI_Model{
         parent::__construct();
     }
     
-    var $table = 'aset';
+    var $table = 'newaset';
     
     
     function getNewAsetID($kelurahanID){
         
-        $query = "SELECT max(RIGHT(id,4)) AS newid FROM aset WHERE LEFT(id,10)='$kelurahanID'";
+        $query = "SELECT max(RIGHT(id,4)) AS newid FROM ".$this->table." WHERE LEFT(id,10)='$kelurahanID'";
         
         $newID = '';
         $hasil = $this->db->query($query)->result();
@@ -572,7 +572,7 @@ class Aset_model extends CI_Model{
     function getLastAset(){
         $this->db->select('id,ranting,kprnu,tgl_survey,petugas');
         $this->db->from($this->table);
-        $this->db->order_by('autoid','desc');
+        $this->db->order_by('id','asc');
         $this->db->limit(1,0);
         return $this->db->get()->row();
     }
