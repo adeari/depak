@@ -1,3 +1,6 @@
+
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,11 +15,14 @@ public class runReport {
     static boolean debugging = true;
 
     public static void main(String args[]) {
+        //[pdf/printlangusng] [filereport] [filepdf] [kondisi]
+        
+        
         String direktoryReport = "/media/apps/pakedy/depak/potensi/report/";
         if (!debugging) {
             direktoryReport = "";
         }
-        String fileReport ="",qryData ="",thisCondition="";
+        String fileReport ="",qryData ="",thisCondition="",pdfDestination="";
         java.util.Map parameter = new java.util.HashMap();
         
         fileReport = direktoryReport + "newaasetLaporan.jasper";
@@ -38,6 +44,14 @@ public class runReport {
             if (debugging) {
                 jasperViewer.setVisible(true);
             }
+            //export to pdf
+            pdfDestination = direktoryReport+"peka.pdf";
+            net.sf.jasperreports.engine.JasperExportManager.exportReportToPdfFile(jasperPrint, pdfDestination);
+            //end export to pdf
+            
+            //print report
+            net.sf.jasperreports.engine.JasperPrintManager.printReport(jasperPrint, false);
+            //end printreport
         } catch (Exception ex) {
             if (debugging) {
                 System.out.println(" error " + ex.getMessage());

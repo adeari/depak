@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newaasetLaporan" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="c0512320-ebd4-4f83-a7ec-24f18a20ae60">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="153"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid,(select b.namaKelurahan from tbkelurahan b where b.kelurahanID	=kelid) as namaKabupaten,(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan from newaset order by kecid,id"]]></defaultValueExpression>
 	</parameter>
@@ -34,12 +34,12 @@
 	<field name="namaKecamatan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<group name="kecid">
+	<group name="kecid" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{kecid}]]></groupExpression>
 		<groupHeader>
-			<band height="29">
+			<band height="47">
 				<staticText>
-					<reportElement uuid="fa834ade-d402-462c-9393-603ec478032c" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="13"/>
+					<reportElement uuid="fa834ade-d402-462c-9393-603ec478032c" stretchType="RelativeToTallestObject" x="0" y="4" width="60" height="13"/>
 					<box>
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -52,7 +52,7 @@
 					<text><![CDATA[Kabupaten]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="53e89cdc-1f52-4f5b-b6e9-636f4fb36bde" stretchType="RelativeToTallestObject" x="0" y="13" width="60" height="13"/>
+					<reportElement uuid="53e89cdc-1f52-4f5b-b6e9-636f4fb36bde" stretchType="RelativeToTallestObject" x="0" y="17" width="60" height="13"/>
 					<box>
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -65,7 +65,7 @@
 					<text><![CDATA[Kecamatan]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="ddd8e4f2-09c1-4327-9a14-724604694857" stretchType="RelativeToTallestObject" x="51" y="0" width="389" height="13" isPrintWhenDetailOverflows="true"/>
+					<reportElement uuid="ddd8e4f2-09c1-4327-9a14-724604694857" stretchType="RelativeToTallestObject" x="51" y="4" width="389" height="13" isPrintWhenDetailOverflows="true"/>
 					<box leftPadding="0">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -78,7 +78,7 @@
 					<textFieldExpression><![CDATA[": "+$F{namaKabupaten}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="8d739215-4f88-4406-80f9-35696291b930" stretchType="RelativeToTallestObject" x="51" y="13" width="389" height="13" isPrintWhenDetailOverflows="true"/>
+					<reportElement uuid="8d739215-4f88-4406-80f9-35696291b930" stretchType="RelativeToTallestObject" x="51" y="17" width="389" height="13" isPrintWhenDetailOverflows="true"/>
 					<box leftPadding="0">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -90,14 +90,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[": "+ $F{namaKecamatan}]]></textFieldExpression>
 				</textField>
-			</band>
-		</groupHeader>
-	</group>
-	<group name="header" isReprintHeaderOnEachPage="true">
-		<groupHeader>
-			<band height="13">
 				<staticText>
-					<reportElement uuid="484e2b79-cdd4-4a82-beb4-717b75e6c422" stretchType="RelativeToTallestObject" x="516" y="0" width="82" height="13"/>
+					<reportElement uuid="484e2b79-cdd4-4a82-beb4-717b75e6c422" stretchType="RelativeToTallestObject" x="516" y="34" width="82" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -110,59 +104,7 @@
 					<text><![CDATA[Desa]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e9e13513-002d-4fcc-9f98-6f000e3125b5" stretchType="RelativeToTallestObject" x="143" y="0" width="80" height="13"/>
-					<box>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center">
-						<font fontName="Times New Roman"/>
-					</textElement>
-					<text><![CDATA[Jenis]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="92fdfddd-79cb-488a-af3b-1974619fb214" stretchType="RelativeToTallestObject" x="25" y="0" width="118" height="13"/>
-					<box>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center">
-						<font fontName="Times New Roman"/>
-					</textElement>
-					<text><![CDATA[ID-Aset]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="eeff7668-58fc-4d54-a9b8-50662872c85d" stretchType="RelativeToTallestObject" x="223" y="0" width="111" height="13"/>
-					<box>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center">
-						<font fontName="Times New Roman"/>
-					</textElement>
-					<text><![CDATA[Nama]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="702b594b-f8ce-4d5a-95cf-b97e2e94a52c" stretchType="RelativeToTallestObject" x="334" y="0" width="100" height="13"/>
-					<box>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center">
-						<font fontName="Times New Roman"/>
-					</textElement>
-					<text><![CDATA[Alamat]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="3b8a372c-684c-40dc-9e71-c996918496e3" stretchType="RelativeToTallestObject" x="434" y="0" width="82" height="13"/>
+					<reportElement uuid="3b8a372c-684c-40dc-9e71-c996918496e3" stretchType="RelativeToTallestObject" x="434" y="34" width="82" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -175,7 +117,59 @@
 					<text><![CDATA[Ranting]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="06e37265-3312-49b9-8291-f331aec64d9a" stretchType="RelativeToTallestObject" x="0" y="0" width="25" height="13"/>
+					<reportElement uuid="e9e13513-002d-4fcc-9f98-6f000e3125b5" stretchType="RelativeToTallestObject" x="143" y="34" width="80" height="13"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Jenis]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="eeff7668-58fc-4d54-a9b8-50662872c85d" stretchType="RelativeToTallestObject" x="223" y="34" width="111" height="13"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Nama]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="92fdfddd-79cb-488a-af3b-1974619fb214" stretchType="RelativeToTallestObject" x="25" y="34" width="118" height="13"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[ID-Aset]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="702b594b-f8ce-4d5a-95cf-b97e2e94a52c" stretchType="RelativeToTallestObject" x="334" y="34" width="100" height="13"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Alamat]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="06e37265-3312-49b9-8291-f331aec64d9a" stretchType="RelativeToTallestObject" x="0" y="34" width="25" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
