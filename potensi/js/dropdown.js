@@ -39,6 +39,7 @@ function ambil_kec(id){
         dataType: "html"
     });
 }
+
             
 function ambil_kel(id){
     $.ajax({

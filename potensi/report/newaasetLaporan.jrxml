@@ -4,7 +4,9 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid,(select b.namaKelurahan from tbkelurahan b where b.kelurahanID	=kelid) as namaKabupaten,(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan from newaset order by kecid,id"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid, "
++"(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten, "
++"(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan from newaset order by kecid,id"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[$P!{qryData}]]>
@@ -339,6 +341,6 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

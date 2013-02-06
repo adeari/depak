@@ -1,4 +1,8 @@
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 
 
 /*
@@ -12,24 +16,51 @@
  */
 public class runReport {
 
-    static boolean debugging = true;
+    static boolean debugging = false;
 
     public static void main(String args[]) {
-        //[pdf/printlangusng] [filereport] [filepdf] [kondisi]
+        //[pdf/printlangusng] [directoryREPORT] [directoryPDF] [filereport] [filepdf] [kondisi]
         
         
-        String direktoryReport = "/media/apps/pakedy/depak/potensi/report/";
+        String direktoryReport = "/media/apps/pakedy/depak/potensi/dist/";
+        String directoyPDF ="/media/apps/pakedy/depak/potensi/pdf/";
         if (!debugging) {
-            direktoryReport = "";
+            direktoryReport = args[1];
+            directoyPDF = args[2];
         }
+        
         String fileReport ="",qryData ="",thisCondition="",pdfDestination="";
         java.util.Map parameter = new java.util.HashMap();
         
-        fileReport = direktoryReport + "newaasetLaporan.jasper";
+        fileReport = direktoryReport + args[3] +".jasper";
+        if (args[5]!=null) {
+            if (args[5].length()>0) {
+                thisCondition += " propid = "+args[5]+" ";
+            }
+        }
+        
+        if (args[6]!=null) {
+            if (args[6].length()>0) {
+                if (thisCondition.length()>0)
+                    thisCondition +=" and ";
+                thisCondition += " kabid = "+args[6]+" ";
+            }
+        }
+        
+        if (args[7]!=null) {
+            if (args[7].length()>0) {
+                if (thisCondition.length()>0)
+                    thisCondition +=" and ";
+                thisCondition += " kecid = "+args[7]+" ";
+            }
+        }
+        if (thisCondition.length()>0)
+            thisCondition = " where "+thisCondition;
         qryData = "select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid"
-                + ",(select b.namaKelurahan from tbkelurahan b where b.kelurahanID=kelid) as namaKabupaten"
+                + ",(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten"
                 + ",(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan"
                 + "  from newaset"+thisCondition+" order by kecid,id";
+        System.out.println(" qryData = "+qryData);
         
         String klaSS = "jdbc:mysql://localhost/potensi?user=nujatim&password=klaser";
         try {
@@ -37,25 +68,30 @@ public class runReport {
             java.sql.Connection conec = java.sql.DriverManager.getConnection(klaSS);
             parameter.put("qryData", qryData);
             net.sf.jasperreports.engine.JasperPrint jasperPrint = net.sf.jasperreports.engine.JasperFillManager.fillReport(fileReport, parameter, conec);
-            net.sf.jasperreports.view.JasperViewer jasperViewer = new net.sf.jasperreports.view.JasperViewer(jasperPrint, false);
-            jasperViewer.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
-            jasperViewer.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-            jasperViewer.setTitle("Laporan Aset");
             if (debugging) {
+                net.sf.jasperreports.view.JasperViewer jasperViewer = new net.sf.jasperreports.view.JasperViewer(jasperPrint, false);
+                jasperViewer.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+                jasperViewer.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+                jasperViewer.setTitle("Laporan Aset");
                 jasperViewer.setVisible(true);
             }
-            //export to pdf
-            pdfDestination = direktoryReport+"peka.pdf";
-            net.sf.jasperreports.engine.JasperExportManager.exportReportToPdfFile(jasperPrint, pdfDestination);
-            //end export to pdf
             
-            //print report
-            net.sf.jasperreports.engine.JasperPrintManager.printReport(jasperPrint, false);
-            //end printreport
+            if (args[0].equalsIgnoreCase("pdf")) {
+                Date dt = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
+                pdfDestination = directoyPDF + args[4] +"_"+sdf.format(dt) +".pdf";
+                net.sf.jasperreports.engine.JasperExportManager.exportReportToPdfFile(jasperPrint, pdfDestination);
+            } else if (args[0].equalsIgnoreCase("cetak")) {
+                net.sf.jasperreports.engine.JasperPrintManager.printReport(jasperPrint, false);
+            }
+            
+            
+            System.exit(0);
         } catch (Exception ex) {
             if (debugging) {
                 System.out.println(" error " + ex.getMessage());
             }
+            System.exit(0);
         }
     }
 }

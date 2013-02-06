@@ -360,3 +360,6 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+$config['directoryJarReport']=$_SERVER['DOCUMENT_ROOT']."/potensi/dist/";
+$config['directoryPDFReport']=$_SERVER['DOCUMENT_ROOT']."/potensi/pdf/";

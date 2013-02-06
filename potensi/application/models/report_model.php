@@ -18,6 +18,7 @@ class Report_model extends CI_Model{
     }
     
     var $table = 'report';
+    var $tabelAset='newaset';
     
     function update($id,$search){
         $this->db->where('id',$id);
@@ -33,7 +34,7 @@ class Report_model extends CI_Model{
     
     function getAll($limit,$offset,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         if(strlen($ranting)>0){
             $this->db->like('ranting',$ranting);
         }
@@ -44,7 +45,7 @@ class Report_model extends CI_Model{
     
     function getAsetByKelurahan($limit,$offset,$kelurahanID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,10)',$kelurahanID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -56,7 +57,7 @@ class Report_model extends CI_Model{
     
     function getAsetByKecamatan($limit,$offset,$kecamatanID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,6)',$kecamatanID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -68,7 +69,7 @@ class Report_model extends CI_Model{
     
     function getAsetByKota($limit,$offset,$kotaID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,4)',$kotaID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -80,7 +81,7 @@ class Report_model extends CI_Model{
     
     function getAsetByPropinsi($limit,$offset,$propinsiID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,2)',$propinsiID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -101,7 +102,7 @@ class Report_model extends CI_Model{
     
     function countAsetByPropinsi($propinsiID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,2)',$propinsiID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -111,7 +112,7 @@ class Report_model extends CI_Model{
     
     function countAsetByKota($kotaID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,4)',$kotaID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -121,7 +122,7 @@ class Report_model extends CI_Model{
     
     function countAsetByKecamatan($kecamatanID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,6)',$kecamatanID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -131,7 +132,7 @@ class Report_model extends CI_Model{
     
     function countAsetByKelurahan($kelurahanID,$ranting){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,10)',$kelurahanID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -141,7 +142,7 @@ class Report_model extends CI_Model{
     
     function countRowByKelurahan($kelurahanID,$ranting,$jenis){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,10)',$kelurahanID);
         if(strlen($ranting)>0){
             $this->db->where('ranting',$ranting);
@@ -152,7 +153,7 @@ class Report_model extends CI_Model{
     
     function countRowByKecamatan($kecamatanID,$jenis){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,6)',$kecamatanID);
         $this->db->where('jenis_aset',$jenis);
         return $this->db->get()->num_rows();
@@ -160,7 +161,7 @@ class Report_model extends CI_Model{
     
     function countRowByKota($kotaID,$jenis){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,4)',$kotaID);
         $this->db->where('jenis_aset',$jenis);
         return $this->db->get()->num_rows();
@@ -168,7 +169,7 @@ class Report_model extends CI_Model{
     
     function countRowByPropinsi($propinsiID,$jenis){
         $this->db->select('*');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('LEFT(id,2)',$propinsiID);
         $this->db->where('jenis_aset',$jenis);
         return $this->db->get()->num_rows();
@@ -176,7 +177,7 @@ class Report_model extends CI_Model{
     
     function countRow($jenis){
         $this->db->select('id');
-        $this->db->from('aset');
+        $this->db->from($this->tabelAset);
         $this->db->where('jenis_aset',$jenis);
         return $this->db->get()->num_rows();
     }

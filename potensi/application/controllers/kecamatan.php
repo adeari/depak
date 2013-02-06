@@ -151,6 +151,7 @@ class Kecamatan extends CI_Controller{
         
     }
     
+    
     function getRekapKec(){
         $kotaID = substr($this->uri->segment(3),0,4);
         $kecamatan = $this->Kecamatan_model->getKecamatan($kotaID);
