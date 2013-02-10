@@ -148,10 +148,14 @@ class rpaset extends CI_Controller{
 	}
 	
 	function createpdf(){
+		$genrateMD5 = md5($this->session->userdata['username']);
+		if (strlen($genrateMD5)>4)
+			$genrateMD5 = substr($genrateMD5,0,4);
+		$PDFame = "newAset_".date('dmY_His')."_".$genrateMD5;
 		$java = "java -jar ".$this->config->config['directoryJarReport']
 		."reportNU.jar pdf "
 				.$this->config->config['directoryJarReport']." "
-						.$this->config->config['directoryPDFReport']." newaasetLaporan newAset";
+						.$this->config->config['directoryPDFReport']." newaasetLaporan ".$PDFame;
 		$kondisi ="";
 		if (strlen($this->input->get("propinsi"))>0)
 		{
@@ -166,7 +170,6 @@ class rpaset extends CI_Controller{
 			$kondisi .=" ".$this->input->get("kecamatan");
 		}
 		$java .=$kondisi;
-		echo $java;
 		$path=$this->config->config['directoryPDFReport'];
 		
 		$handle=opendir($path);		
@@ -183,6 +186,10 @@ class rpaset extends CI_Controller{
 		}
 		closedir($handle);
 		exec ($java);
+		header('Content-type: application/pdf');
+		$ResultPDF = $this->config->config['directoryPDFReport'].$PDFame.".pdf";
+		header("Content-Disposition:attachment;filename=".$PDFame.".pdf");
+		readfile($ResultPDF);
 	}
 }
 

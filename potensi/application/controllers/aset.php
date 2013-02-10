@@ -121,6 +121,10 @@ class Aset extends CI_Controller{
             'kprnu'=>  $this->input->post('kprnu'),
             'ranting'=> $this->input->post('ranting'),
             'petugas'=> $this->input->post('petugas'),
+        	'propid'=> $this->input->post('propinsi'),
+        	'kabid'=> $this->input->post('kota'),
+        	'kecid'=> $this->input->post('kecamatan'),
+        	'kelid'=> $this->input->post('kelurahan'),
             'created'=>  $tgl_entry,
             'createdBy'=>  $this->session->userdata('username')
             );
@@ -185,7 +189,7 @@ class Aset extends CI_Controller{
         //$ket_status = '';
         $status_tanah = $this->input->post('status_tanah');
         if($status_tanah=='5'){
-            $ket_status = $this->input->post('status_tanah');
+            $ket_status = $this->input->post('ket_status');
         }else{
             $status = $status = $this->Status_model->getStatusTanahByID($status_tanah)->row();
             $ket_status = $status->status_tanah;
