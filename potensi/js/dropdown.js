@@ -16,6 +16,19 @@ function ambil_prop(id){
     });
 }
 
+function ambil_propInRPaset(id){
+    $.ajax({
+       url: "http://localhost/potensi/index.php/propinsi/getPropinsi/"+id,
+       success: function(msg){
+           $('.propinsi').html(msg);
+           ambil_kota(id);
+           ambil_kec(id);
+           ambil_kel(id);
+       },
+       dataType: "html"
+    });
+}
+
 function ambil_kota(id){
     $.ajax({
         url: "http://localhost/potensi/index.php/kota/getKota/"+id,

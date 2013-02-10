@@ -33,7 +33,7 @@ class rpaset extends CI_Controller{
             
         $data['title'] = $this->title;
         //$data['h2_title'] = 'Input Aset';
-        $data['main_view'] = 'rpaset';
+        $data['main_view'] = 'rpaset_view';
         $data['form_action'] = site_url('report/search');
         
         //$data['pilihkota'] = $this->Kota_model->getKota();

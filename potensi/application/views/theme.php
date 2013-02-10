@@ -69,10 +69,11 @@
         
                 onload="<?php
           if($this->uri->segment(1)=='rekap'){
-            echo 'rekap_prop('. $propID .')';  
+            echo 'rekap_prop('. $propID .')';
+          } else if(strcmp($this->uri->segment(1),'rpaset')==0){
+			echo 'ambil_propInRPaset('. $propID .')';
           }else{
               echo 'ambil_prop('. $propID .')';
-              
           }
           ?>" >
         <table width="900" cellpadding="0" cellspacing="0" border="0" align="center" background="<?php echo base_url() . 'images/c8d0ba-40PERSEN.png'; ?>">
