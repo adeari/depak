@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newaasetLaporan" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="685" leftMargin="82" rightMargin="25" topMargin="31" bottomMargin="31" uuid="c0512320-ebd4-4f83-a7ec-24f18a20ae60">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newaasetLaporan" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="735" leftMargin="82" rightMargin="25" topMargin="30" bottomMargin="15" uuid="c0512320-ebd4-4f83-a7ec-24f18a20ae60">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="445"/>
+	<property name="ireport.x" value="174"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid, "
 +"(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten, "
-+"(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan from newaset order by kecid,id"]]></defaultValueExpression>
++"(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan, "
++"(select c.namaKelurahan from tbkelurahan c where c.kelurahanID=kelid ) as  namaKelurahan "
++" from newaset order by kecid,id"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="imgPath" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["F:/SERVERLAMA/wamp/www/potensi/dist/logoNU.png"]]></defaultValueExpression>
@@ -39,10 +41,13 @@
 	<field name="namaKecamatan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="namaKelurahan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<group name="kecid" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{kecid}]]></groupExpression>
 		<groupHeader>
-			<band height="98">
+			<band height="99">
 				<staticText>
 					<reportElement uuid="fa834ade-d402-462c-9393-603ec478032c" stretchType="RelativeToTallestObject" x="2" y="71" width="60" height="13"/>
 					<box>
@@ -52,7 +57,7 @@
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left">
-						<font fontName="Times New Roman" isBold="true"/>
+						<font fontName="Times New Roman" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Kabupaten]]></text>
 				</staticText>
@@ -65,12 +70,12 @@
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left">
-						<font fontName="Times New Roman" isBold="true"/>
+						<font fontName="Times New Roman" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Kecamatan]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="ddd8e4f2-09c1-4327-9a14-724604694857" stretchType="RelativeToTallestObject" x="53" y="71" width="389" height="13" isPrintWhenDetailOverflows="true"/>
+					<reportElement uuid="ddd8e4f2-09c1-4327-9a14-724604694857" stretchType="RelativeToTallestObject" x="63" y="71" width="389" height="13" isPrintWhenDetailOverflows="true"/>
 					<box leftPadding="0">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -78,12 +83,12 @@
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Times New Roman" isBold="true"/>
+						<font fontName="Times New Roman" size="11" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{namaKabupaten}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="8d739215-4f88-4406-80f9-35696291b930" stretchType="RelativeToTallestObject" x="53" y="84" width="389" height="13" isPrintWhenDetailOverflows="true"/>
+					<reportElement uuid="8d739215-4f88-4406-80f9-35696291b930" stretchType="RelativeToTallestObject" x="63" y="84" width="389" height="13" isPrintWhenDetailOverflows="true"/>
 					<box leftPadding="0">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -91,11 +96,11 @@
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Times New Roman" isBold="true"/>
+						<font fontName="Times New Roman" size="11" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+ $F{namaKecamatan}]]></textFieldExpression>
 				</textField>
-				<image>
+				<image hAlign="Center">
 					<reportElement uuid="8e5915dc-ca90-40cc-9f20-439b6a5f44c9" x="0" y="5" width="127" height="64"/>
 					<imageExpression><![CDATA[$P{imgPath}]]></imageExpression>
 				</image>
@@ -118,101 +123,101 @@
 					<textElement>
 						<font fontName="Times New Roman" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Daftar Nama Aset Tingkat Cabang]]></text>
+					<text><![CDATA[Daftar Nama Aset]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
 	</group>
 	<group name="headerkolom" isReprintHeaderOnEachPage="true">
 		<groupHeader>
-			<band height="13">
+			<band height="17">
 				<staticText>
-					<reportElement uuid="484e2b79-cdd4-4a82-beb4-717b75e6c422" stretchType="RelativeToTallestObject" x="609" y="0" width="76" height="13"/>
+					<reportElement uuid="484e2b79-cdd4-4a82-beb4-717b75e6c422" stretchType="RelativeToTallestObject" x="630" y="0" width="105" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[Desa]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="3b8a372c-684c-40dc-9e71-c996918496e3" stretchType="RelativeToTallestObject" x="541" y="0" width="68" height="13"/>
+					<reportElement uuid="3b8a372c-684c-40dc-9e71-c996918496e3" stretchType="RelativeToTallestObject" x="525" y="0" width="105" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[Ranting]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e9e13513-002d-4fcc-9f98-6f000e3125b5" stretchType="RelativeToTallestObject" x="173" y="0" width="151" height="13"/>
+					<reportElement uuid="e9e13513-002d-4fcc-9f98-6f000e3125b5" stretchType="RelativeToTallestObject" x="135" y="0" width="100" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[Jenis]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="eeff7668-58fc-4d54-a9b8-50662872c85d" stretchType="RelativeToTallestObject" x="324" y="0" width="129" height="13"/>
+					<reportElement uuid="eeff7668-58fc-4d54-a9b8-50662872c85d" stretchType="RelativeToTallestObject" x="235" y="0" width="140" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[Nama]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="92fdfddd-79cb-488a-af3b-1974619fb214" stretchType="RelativeToTallestObject" x="25" y="0" width="148" height="13"/>
+					<reportElement uuid="92fdfddd-79cb-488a-af3b-1974619fb214" stretchType="RelativeToTallestObject" x="25" y="0" width="110" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[ID-Aset]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="702b594b-f8ce-4d5a-95cf-b97e2e94a52c" stretchType="RelativeToTallestObject" x="453" y="0" width="88" height="13"/>
+					<reportElement uuid="702b594b-f8ce-4d5a-95cf-b97e2e94a52c" stretchType="RelativeToTallestObject" x="375" y="0" width="150" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
-					<text><![CDATA[Alamat]]></text>
+					<text><![CDATA[Lokasi]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="06e37265-3312-49b9-8291-f331aec64d9a" stretchType="RelativeToTallestObject" x="0" y="0" width="25" height="13"/>
+					<reportElement uuid="06e37265-3312-49b9-8291-f331aec64d9a" stretchType="RelativeToTallestObject" x="0" y="0" width="25" height="17"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
 						<rightPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
 					<text><![CDATA[No.]]></text>
@@ -235,7 +240,7 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="f6c055e3-605e-4426-8272-2b68bbb424f7" stretchType="RelativeToTallestObject" x="25" y="0" width="148" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="f6c055e3-605e-4426-8272-2b68bbb424f7" stretchType="RelativeToTallestObject" x="25" y="0" width="110" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -248,7 +253,7 @@
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d6f64564-3269-43e4-a55e-316e38a72dba" stretchType="RelativeToTallestObject" x="173" y="0" width="151" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="d6f64564-3269-43e4-a55e-316e38a72dba" stretchType="RelativeToTallestObject" x="135" y="0" width="100" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -261,7 +266,7 @@
 				<textFieldExpression><![CDATA[$F{ket_jenis}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0972b1ce-fec4-4d50-9dbd-51200668b9d5" stretchType="RelativeToTallestObject" x="324" y="0" width="129" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="0972b1ce-fec4-4d50-9dbd-51200668b9d5" stretchType="RelativeToTallestObject" x="235" y="0" width="140" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -274,7 +279,7 @@
 				<textFieldExpression><![CDATA[$F{nama_aset}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1c6b24a8-e989-42b7-9ada-98896713a49d" stretchType="RelativeToTallestObject" x="453" y="0" width="88" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="1c6b24a8-e989-42b7-9ada-98896713a49d" stretchType="RelativeToTallestObject" x="375" y="0" width="150" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -300,7 +305,7 @@
 				<textFieldExpression><![CDATA[$V{kecid_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6b352fbc-3aec-4f10-8210-2040d3cfd771" stretchType="RelativeToTallestObject" x="541" y="0" width="68" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="6b352fbc-3aec-4f10-8210-2040d3cfd771" stretchType="RelativeToTallestObject" x="525" y="0" width="105" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -313,7 +318,7 @@
 				<textFieldExpression><![CDATA[$F{ranting}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6c22e73b-994b-4ceb-a7cd-0a163bb806f1" stretchType="RelativeToTallestObject" x="609" y="0" width="76" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="6c22e73b-994b-4ceb-a7cd-0a163bb806f1" stretchType="RelativeToTallestObject" x="630" y="0" width="105" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -323,7 +328,7 @@
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ranting}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{namaKelurahan}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -331,23 +336,23 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField>
-				<reportElement uuid="dfa0b5c1-ab05-44e6-aaf6-738cd6ea5de5" x="549" y="5" width="70" height="13"/>
+				<reportElement uuid="dfa0b5c1-ab05-44e6-aaf6-738cd6ea5de5" x="610" y="5" width="90" height="13"/>
 				<textElement textAlignment="Right">
-					<font fontName="Times New Roman"/>
+					<font fontName="Serif" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Hal. "+$V{PAGE_NUMBER}+"  dari "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="2f88809f-122f-456d-a39a-1894d1383c4e" x="619" y="5" width="66" height="13"/>
-				<textElement textAlignment="Right">
-					<font fontName="Times New Roman"/>
+				<reportElement uuid="2f88809f-122f-456d-a39a-1894d1383c4e" x="703" y="5" width="30" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " Halaman"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8c20e473-87d6-4601-9dea-dcbbdb59311d" stretchType="RelativeToTallestObject" x="0" y="5" width="132" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="8c20e473-87d6-4601-9dea-dcbbdb59311d" stretchType="RelativeToTallestObject" x="0" y="5" width="216" height="13" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -355,7 +360,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Times New Roman" isBold="false"/>
+					<font fontName="Serif" isBold="false" isItalic="true" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{namaKabupaten} + " - " +$F{namaKecamatan}]]></textFieldExpression>
 			</textField>

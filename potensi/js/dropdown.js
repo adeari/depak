@@ -16,16 +16,25 @@ function ambil_prop(id){
     });
 }
 
-function ambil_propInRPaset(id){
+function ambil_propInRPaset(id,posting,kotaID,kecID){
     $.ajax({
-       url: "http://localhost/potensi/index.php/propinsi/getPropinsi/"+id,
+       url: "http://localhost/potensi/index.php/propinsi/getPropinsiInRPaset/"+id,
        success: function(msg){
            $('.propinsi').html(msg);
-           ambil_kota(id);
-           ambil_kec(id);
-           ambil_kel(id);
+           ambil_kotaInRPaset(id,posting,kotaID,kecID);
        },
        dataType: "html"
+    });
+}
+
+function ambil_kotaInRPaset(id,posting,kotaID,kecID){
+    $.ajax({
+        url: "http://localhost/potensi/index.php/kota/getKotaRPaset/"+id+"/"+kotaID,
+        success: function(msg){
+            $('.kota').html(msg);
+            ambil_kecInRPaset(kotaID,posting,kecID);
+        },
+        dataType: "html"
     });
 }
 
@@ -36,6 +45,20 @@ function ambil_kota(id){
             $('.kota').html(msg);
             ambil_kec(id);
             ambil_kel(id);
+        },
+        dataType: "html"
+    });
+}
+
+function ambil_kecInRPaset(id,posting,kecID){
+    $.ajax({
+        
+        url: "http://localhost/potensi/index.php/kecamatan/getKecamatanRPaset/"+id+"/"+kecID,
+        success: function(msg){
+            $('.kecamatan').html(msg);
+            if (posting) {
+            	document.report_form.submit();
+            }
         },
         dataType: "html"
     });

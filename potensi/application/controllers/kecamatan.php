@@ -133,12 +133,12 @@ class Kecamatan extends CI_Controller{
 
     }
     
-    function getKecamatan(){
-        $kotaID = substr($this->uri->segment(3),0,4);
-        $kecID = substr($this->uri->segment(3),0,6);
+    function getKecamatanRPaset(){
+        $kotaID = $this->uri->segment(3);
+        $kecID = $this->uri->segment(4);
         $kecamatan = $this->Kecamatan_model->getKecamatan($kotaID);
         echo 'Kecamatan<br />';
-        echo '<SELECT name="kecamatan" onchange="ambil_kel($(this).val())" style="width:220px">';
+        echo '<SELECT name="kecamatan" onchange="document.report_form.submit()" style="width:220px">';
         echo '<option value="">-- pilih --</option>';
         foreach($kecamatan as $data){
             if($data->kecamatanID == $kecID){
@@ -149,6 +149,24 @@ class Kecamatan extends CI_Controller{
         }
         echo '</select>';
         
+    }
+    
+    function getKecamatan(){
+    	$kotaID = substr($this->uri->segment(3),0,4);
+    	$kecID = substr($this->uri->segment(3),0,6);
+    	$kecamatan = $this->Kecamatan_model->getKecamatan($kotaID);
+    	echo 'Kecamatan<br />';
+    	echo '<SELECT name="kecamatan" onchange="ambil_kel($(this).val())" style="width:220px">';
+    	echo '<option value="">-- pilih --</option>';
+    	foreach($kecamatan as $data){
+    		if($data->kecamatanID == $kecID){
+    			echo '<option value="' . $data->kecamatanID . '" selected>' . $data->namaKecamatan . '</option>';
+    		}else{
+    			echo '<option value="' . $data->kecamatanID . '">' . $data->namaKecamatan . '</option>';
+    		}
+    	}
+    	echo '</select>';
+    
     }
     
     

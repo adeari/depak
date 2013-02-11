@@ -138,6 +138,23 @@ class Kota extends CI_Controller{
         echo '</select>';
     }
     
+    function getKotaRPaset(){
+    	$propinsiID = $this->uri->segment(3);
+    	$kotaID = $this->uri->segment(4);
+    	$kota = $this->Kota_model->getKota($propinsiID);
+    	echo 'Kota<br />';
+    	echo '<SELECT name="kota" onchange="ambil_kecInRPaset($(this).val(),true)" style="width:220px">';
+    	echo '<option value="">-- pilih --</option>';
+    	foreach($kota as $data){
+    		if($data->kotaID == $kotaID){
+    			echo '<option value="' . $data->kotaID . '" selected>' . $data->namaKota . '</option>';
+    		}else{
+    			echo '<option value="' . $data->kotaID . '">' . $data->namaKota . '</option>';
+    		}
+    	}
+    	echo '</select>';
+    }
+    
     function getRekapKota(){
         $propinsiID = substr($this->uri->segment(3),0,2);
         $kota = $this->Kota_model->getKota($propinsiID);

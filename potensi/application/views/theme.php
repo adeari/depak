@@ -69,11 +69,20 @@
         
                 onload="<?php
           if($this->uri->segment(1)=='rekap'){
-            echo 'rekap_prop('. $propID .')';
+            echo 'rekap_prop('. $propID .');';
           } else if(strcmp($this->uri->segment(1),'rpaset')==0){
-			echo 'ambil_propInRPaset('. $propID .')';
+			$propinsiID = '\'\'';
+			if (strlen($this->input->post('propinsi')>0))
+				$propinsiID = $this->input->post('propinsi');
+			$kotaID = '\'\'';
+			if (strlen($this->input->post('kota')>0))
+				$kotaID = $this->input->post('kota');
+			$kecamatanID = '\'\'';
+			if (strlen($this->input->post('kecamatan')>0))
+				$kecamatanID = $this->input->post('kecamatan');
+			echo "ambil_propInRPaset(".$propinsiID.",false,".$kotaID.",".$kecamatanID.");";
           }else{
-              echo 'ambil_prop('. $propID .')';
+              echo 'ambil_prop('. $propID .');';
           }
           ?>" >
         <table width="900" cellpadding="0" cellspacing="0" border="0" align="center" background="<?php echo base_url() . 'images/c8d0ba-40PERSEN.png'; ?>">

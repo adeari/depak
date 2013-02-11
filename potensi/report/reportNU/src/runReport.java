@@ -65,6 +65,7 @@ public class runReport {
         qryData = "select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid"
                 + ",(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten"
                 + ",(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan"
+                + ",(select c.namaKelurahan from tbkelurahan c where c.kelurahanID=kelid ) as  namaKelurahan"
                 + "  from newaset" + thisCondition + " order by kecid,id";
 
         String klaSS = "jdbc:mysql://localhost/potensi?user=nujatim&password=klaser";
