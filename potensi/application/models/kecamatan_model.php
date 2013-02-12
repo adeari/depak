@@ -70,6 +70,18 @@ class Kecamatan_model extends CI_Model{
         $this->db->limit($limit,$offset);
         return $this->db->get()->num_rows();
     }
+    
+    function getNamaKecamatanByKecamatanID($kecamatanID){
+    	$kecamatanName ="";
+    	$this->db->select('namaKecamatan');
+    	$this->db->from($this->table);
+    	$this->db->where('kecamatanID',$kecamatanID);
+    	$kecamatan = $this->db->get()->result();
+    	foreach($kecamatan as $data){
+    		$kecamatanName = $data->namaKecamatan;
+    	}
+    	return $kecamatanName;
+    }
 }
 
 ?>

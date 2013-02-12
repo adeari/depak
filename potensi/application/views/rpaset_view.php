@@ -41,6 +41,10 @@ function createPDF(){
                 <td align="center"><input type="button" name="btn" onClick="createPDF()" value="Export PDF" /></td>
             </tr>
         </table>
+        <br>
+        <br>
+        <?php echo !empty($table) ? $table : ''; ?>
+        <?php  echo !empty($pagination) ? '<p id="pagination">'.$pagination.'</p>' : ''; ?> 
     </fieldset>
     </div>
 </form>

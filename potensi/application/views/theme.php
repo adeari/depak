@@ -72,12 +72,26 @@
             echo 'rekap_prop('. $propID .');';
           } else if(strcmp($this->uri->segment(1),'rpaset')==0){
 			$propinsiID = '\'\'';
+			$kotaID = '\'\'';
+			$kecamatanID = '\'\'';
+			
+			if (strlen($this->uri->segment(3))>0) {
+				$propinsiID = $this->uri->segment(3);
+			}
+			if (strlen($this->uri->segment(4))>0) {
+				$kotaID = $this->uri->segment(4);
+			}
+			if (strlen($this->uri->segment(5))>0) {
+				$kecamatanID = $this->uri->segment(5);
+			}
+			
+			
 			if (strlen($this->input->post('propinsi')>0))
 				$propinsiID = $this->input->post('propinsi');
-			$kotaID = '\'\'';
+			
 			if (strlen($this->input->post('kota')>0))
 				$kotaID = $this->input->post('kota');
-			$kecamatanID = '\'\'';
+			
 			if (strlen($this->input->post('kecamatan')>0))
 				$kecamatanID = $this->input->post('kecamatan');
 			echo "ambil_propInRPaset(".$propinsiID.",false,".$kotaID.",".$kecamatanID.");";

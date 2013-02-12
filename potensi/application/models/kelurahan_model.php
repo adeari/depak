@@ -26,6 +26,18 @@ class Kelurahan_model extends CI_Model {
         return $this->db->get()->result();
     }
     
+    function getNamaKelurahanbyId($kelurahanID){
+    	$namaKelurahan="";
+    	$this->db->select('namaKelurahan');
+    	$this->db->from($this->table);
+    	$this->db->where('kelurahanID',$kelurahanID);
+    	$kelurahan = $this->db->get()->result();
+    	foreach ($kelurahan as $data) {
+    		$namaKelurahan = $data->namaKelurahan;
+    	}
+    	return $namaKelurahan;
+    }
+    
     function getKel($kecamatanID,$limit,$offset){
         $this->db->select('kelurahanID,namaKelurahan');
         $this->db->from('tbkelurahan');

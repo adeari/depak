@@ -538,7 +538,7 @@ class Aset_model extends CI_Model{
     }
     
     function getAll($limit,$offset,$ranting,$jenis,$status,$bukti,$pengelola){
-        $this->db->select('id,ket_jenis,nama_aset,lokasi,ranting');
+        $this->db->select('id,ket_jenis,nama_aset,lokasi,ranting,kelid');
         $this->db->from($this->table);
         if(strlen($jenis)>0){
             $this->db->where('jenis_aset',$jenis);

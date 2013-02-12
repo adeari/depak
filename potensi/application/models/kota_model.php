@@ -41,6 +41,18 @@ class Kota_model extends CI_Model{
         return $this->db->get()->row();
     }
     
+    function getNamaKotaByKotaID($kotaID){
+    	$cityName ="";
+    	$this->db->select('namaKota');
+    	$this->db->from($this->table);
+    	$this->db->where('kotaID',$kotaID);
+    	$kota = $this->db->get()->result();
+    	foreach($kota as $data){
+    		$cityName = $data->namaKota;
+    	}
+    	return $cityName;
+    }
+    
     function delete($kotaID){
         $this->db->where('kotaID', $kotaID);
         $this->db->delete($this->table);
