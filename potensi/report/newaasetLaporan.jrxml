@@ -11,7 +11,7 @@
 +" from newaset order by kecid,id"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="imgPath" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["F:/SERVERLAMA/wamp/www/potensi/dist/logoNU.png"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/media/apps/pakedy/depak/potensi/report/logoNU.png"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[$P!{qryData}]]>

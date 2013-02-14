@@ -35,25 +35,7 @@ function createPDF(){
 <form name="report_form" action="<?php echo $form_action;?>" method="post">
     <div>
     <fieldset>
-        <legend>REKAPITULASI ENTRY DATA ASET</legend>
-        <table  cellpadding="0" cellspacing="0" border="0">
-            <tr>        
-                <td><span class="propinsi"></span></td>
-            </tr>
-            <tr>
-                <td><span class="kota"></span></td>
-            </tr>
-            <tr>
-                <td><span class="kecamatan"></span></td>
-            </tr>
-            <tr>
-                <td align="center">
-                <input type="button" name="btn" onClick="createPDF()" value="Export PDF" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" name="btn" onClick="PrintDataHere()" value="Print" />
-                </td>
-            </tr>
-        </table>
+        <legend>REKAPITULASI PEROLEHAN ENTRY DATA</legend>
         <br>
         <br>
         <?php echo !empty($message) ? $message : ''; ?>

@@ -36,26 +36,26 @@ class rpaset extends CI_Controller{
 		if($this->session->userdata('login') == TRUE and ($this->session->userdata('level')!='User' or $this->session->userdata('level')!='Entry')){
 
 			$data['title'] = $this->title;
-			//$data['h2_title'] = 'Input Aset';
 			$data['main_view'] = 'rpaset_view';
-			$data['form_action'] = site_url('report/search');
-
+			$data['form_action'] = site_url('rpaset');
 			$offset = 0;
+			if (strlen($this->uri->segment(6))>0) {
+				$offset = $this->uri->segment(6);
+			}
 			$propinsiID = '';
 			$kotaID = '';
 			$kecamatanID = '';
 			
-			if (strlen($this->uri->segment(3))>0) {
-				$propinsiID = $this->uri->segment(3);
-				$offset = $this->uri->segment(4);
+			if (strlen($this->uri->segment(3))>1&&strcmp(substr($this->uri->segment(3),0,1),"a")==0) {
+				$propinsiID = substr($this->uri->segment(3),1);
 			}
-			if (strlen($this->uri->segment(4))>0) {
-				$kotaID = $this->uri->segment(4);
-				$offset = $this->uri->segment(5);
+			
+			if (strlen($this->uri->segment(4))>1&&strcmp(substr($this->uri->segment(4),0,1),"b")==0) {
+				$kotaID = substr($this->uri->segment(4),1);
 			}
-			if (strlen($this->uri->segment(5))>0) {
-				$kecamatanID = $this->uri->segment(5);
-				$offset = $this->uri->segment(6);
+			
+			if (strlen($this->uri->segment(5))>1&&strcmp(substr($this->uri->segment(5),0,1),"c")==0) {
+				$kecamatanID = substr($this->uri->segment(5),1);
 			}
 			
 			if (strlen($this->input->post("propinsi"))>0)
@@ -99,23 +99,23 @@ class rpaset extends CI_Controller{
 				$rec = $this->Aset_model->countRow($this->limit,$offset,'','','','','');
 			}
 
-
 			if($num_rows > 0){
-				$config['base_url'] = site_url('rpaset/viewdata/'.$propinsiID.'/'.$kotaID.'/'.$kecamatanID);
+				$config['base_url'] = site_url('rpaset/viewdata/a'.$propinsiID.'/b'.$kotaID.'/c'.$kecamatanID);
 				$config['total_rows'] = $num_rows;
 				$config['per_page'] = $this->limit;
+				$config['uri_segment'] = 6;
 				$this->pagination->initialize($config);
 				$data['pagination'] = $this->pagination->create_links();
 				$data['num_rows'] = $num_rows;
 				$data['rec'] = $offset + $rec;
-				$tmpl = array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">',
+				$tmpl = array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" width="100%">',
 						'row_alt_start' => '<tr class="zebra">','row_alt_end' => '</tr>');
 
 				$this->table->set_template($tmpl);
 				$this->table->set_empty("&nbsp;");
 				$this->table->set_heading('No.','ID-Aset','Jenis','Nama','Lokasi', 'Ranting','Desa');
 
-				$i = 0 ;
+				$i = 0 + $offset;
 
 				foreach($asets as $row){
 					$namaKelurahan = $this->Kelurahan_model->getNamaKelurahanbyId($row->kelid);
@@ -156,7 +156,7 @@ class rpaset extends CI_Controller{
 		$data['title'] = $this->title;
 		$data['h2_title'] = 'Rekapitulasi Entry Data Aset';
 		$data['main_view'] = 'view_report';
-		$tmpl = array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">',
+		$tmpl = array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" width="100%">',
 				'row_alt_start' => '<tr class="zebra">','row_alt_end' => '</tr>');
 
 		$this->table->set_template($tmpl);
@@ -244,10 +244,36 @@ class rpaset extends CI_Controller{
 		$this->cezpdf->ezTable($data['report'], $titlecolumn,'Rekap Entry Data');
 		$this->cezpdf->ezStream();
 	}
-
-	function changeSpaceBecome_underscore(){
-
+	
+	function printDataHere(){
+		$PDFame = "AsetNU-";
+		$kondisi ="";
+		if (strlen($this->input->get("propinsi"))>0)
+		{
+			$kondisi .=" ".$this->input->get("propinsi");
+		}
+		if (strlen($this->input->get("kota"))>0)
+		{
+			$kondisi .=" ".$this->input->get("kota");
+			$PDFame .= str_replace(" ","_",
+					$this->Kota_model->getNamaKotaByKotaID($this->input->get("kota")))."-";
+		}
+		if (strlen($this->input->get("kecamatan"))>0)
+		{
+			$kondisi .=" ".$this->input->get("kecamatan");
+			$PDFame .= str_replace(" ","_",
+					$this->Kecamatan_model->getNamaKecamatanByKecamatanID($this->input->get("kecamatan")))."-";
+		}
+		$PDFame.=date('Ymd-Hi');
+		$java = "java -jar ".$this->config->config['directoryJarReport']
+		."reportNU.jar cetak "
+				.$this->config->config['directoryJarReport']." "
+						.$this->config->config['directoryPDFReport']." newaasetLaporan ".$PDFame.$kondisi;
+		
+		
+		exec ($java);
 	}
+
 
 	function createpdf(){
 		//(06:51:40 AM) Garuda Edwio: AsetNU-Kab.Blitar-Kec.Kademangan-20130212-0651

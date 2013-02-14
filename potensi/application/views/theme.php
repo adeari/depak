@@ -75,26 +75,33 @@
 			$kotaID = '\'\'';
 			$kecamatanID = '\'\'';
 			
-			if (strlen($this->uri->segment(3))>0) {
-				$propinsiID = $this->uri->segment(3);
+			if (strlen($this->uri->segment(3))>1&&strcmp(substr($this->uri->segment(3),0,1),"a")==0) {
+				$propinsiID = substr($this->uri->segment(3),1);
 			}
-			if (strlen($this->uri->segment(4))>0) {
-				$kotaID = $this->uri->segment(4);
+			
+			if (strlen($this->uri->segment(4))>1&&strcmp(substr($this->uri->segment(4),0,1),"b")==0) {
+				$kotaID = substr($this->uri->segment(4),1);
 			}
-			if (strlen($this->uri->segment(5))>0) {
-				$kecamatanID = $this->uri->segment(5);
+			
+			if (strlen($this->uri->segment(5))>1&&strcmp(substr($this->uri->segment(5),0,1),"c")==0) {
+				$kecamatanID = substr($this->uri->segment(5),1);
 			}
 			
 			
-			if (strlen($this->input->post('propinsi')>0))
+			if (strlen($this->input->post('propinsi')>0)) {
 				$propinsiID = $this->input->post('propinsi');
+			}
 			
-			if (strlen($this->input->post('kota')>0))
+			if (strlen($this->input->post('kota')>0)) {
 				$kotaID = $this->input->post('kota');
+			}
 			
-			if (strlen($this->input->post('kecamatan')>0))
+			if (strlen($this->input->post('kecamatan')>0)) {
 				$kecamatanID = $this->input->post('kecamatan');
+			}
 			echo "ambil_propInRPaset(".$propinsiID.",false,".$kotaID.",".$kecamatanID.");";
+		  } else if(strcmp($this->uri->segment(1),'rpentry')==0){
+			$kosong ="";
           }else{
               echo 'ambil_prop('. $propID .');';
           }

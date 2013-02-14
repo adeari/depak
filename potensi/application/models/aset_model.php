@@ -680,6 +680,14 @@ class Aset_model extends CI_Model{
         $this->db->group_by('createdBy');
         return $this->db->get()->result();
     }
+    
+    function getRekapEntry(){
+    	$this->db->select('createdBy,count(*) as jumlah');
+    	$this->db->from($this->table);
+    	$this->db->group_by('createdBy');
+    	$this->db->order_by('createdBy', 'asc');
+    	return $this->db->get()->result();
+    }
 }
 
 ?>

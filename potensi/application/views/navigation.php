@@ -68,6 +68,9 @@
                                     <li>' .
                                         anchor('rpaset/','Rekapitulasi Aset') .
                                     '</li>
+                                    		<li>' .
+                                        anchor('rpentry/','Rekapitulasi Perolehan Entry') .
+                                    '</li>
                                </ul>
                            </li>
                         </ul>';
