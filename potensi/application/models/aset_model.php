@@ -688,6 +688,45 @@ class Aset_model extends CI_Model{
     	$this->db->order_by('createdBy', 'asc');
     	return $this->db->get()->result();
     }
+    
+    function getCountRekapEntry(){
+    	$this->db->select('createdBy,count(*) as jumlah');
+    	$this->db->from($this->table);
+    	$this->db->group_by('createdBy');
+    	return $this->db->get()->num_rows();
+    }
+    
+    function getCountRekapEntrybyCreatedBY($CreatedBY){
+    	$countThis = 0;
+    	$this->db->select('count(*) as jumlah');
+    	$this->db->from($this->table);
+    	$this->db->where('createdBy',$CreatedBY);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    function getRekapEntryEveryDatedependONCreatedBY($CreatedBY){
+    	$this->db->select("DATE_FORMAT(created, '%d/%m/%Y') as created", FALSE);
+    	$this->db->select("count(*) as jumlah",FALSE);
+    	$this->db->where('createdBy',$CreatedBY);
+    	$this->db->from($this->table);
+    	$this->db->group_by('created');
+    	$this->db->order_by('created', 'asc');
+    	return $this->db->get()->result();
+    }
+    
+    function getRincianPropinsi($propinsiID) {
+    	$this->db->select($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan,count(*) as jumlah");
+    	$this->db->group_by($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('propid',$propinsiID);
+    	$this->db->order_by('jenis_aset', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
 }
 
 ?>

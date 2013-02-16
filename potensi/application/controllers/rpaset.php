@@ -119,7 +119,8 @@ class rpaset extends CI_Controller{
 
 				foreach($asets as $row){
 					$namaKelurahan = $this->Kelurahan_model->getNamaKelurahanbyId($row->kelid);
-					$this->table->add_row(++$i,$row->id,
+					$cellNomor = array('data' => ++$i, 'style' => 'text-align: right', 'width' => '5%' );
+					$this->table->add_row($cellNomor,$row->id,
 							$row->ket_jenis,
 							$row->nama_aset,
 							$row->lokasi,

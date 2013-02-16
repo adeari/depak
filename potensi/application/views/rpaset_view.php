@@ -36,7 +36,7 @@ function createPDF(){
     <div>
     <fieldset>
         <legend>REKAPITULASI ENTRY DATA ASET</legend>
-        <table  cellpadding="0" cellspacing="0" border="0">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>        
                 <td><span class="propinsi"></span></td>
             </tr>

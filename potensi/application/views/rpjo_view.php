@@ -33,24 +33,26 @@ function createPDF(){
 }
 </script>
     <div>
+    
     <fieldset>
-        <legend>REKAPITULASI PEROLEHAN ENTRY DATA</legend>
-        <?php  if (!empty($person)) { ?> 
-        <fieldset>
-        	<table>
-        		<tr><td>Petugas</td><td>:</td><td><?php echo $person?></td></tr>
-        		<tr><td>Total</td><td>:</td><td><?php echo $total?></td></tr>
-        	</table>
-        </fieldset>
-        <?php }?>
+        <legend>Rekapitulkasi jumlah object</legend>
         <br>
-        <br>
-        <?php echo !empty($message) ? $message : ''; ?>
-        <div width="100%" align="center">
+        <?php  if (strcmp($viewPage,"propinsi")==0) { ?>
+	        Total Jumlah Obyek di <?php echo $namaPropinsi;?> terhitung sampai tanggal (<?php echo $tglSkr;?>) adalah <?php echo $totalOFF;?>
+	        <br>
+	        <br>
+	        <?php echo $rincianObject;?>
+	        <br>
+        	<?php echo $jmlObjekPerkabupaten;?>  
+        <?php } else if (strcmp($viewPage,"rincianPropinsi")==0) {  ?>
+         	Rincian Jumlah masing-masing obyek di Propinsi <?php echo $namaPropinsi;?>
+         	<br>
+	        <br>
+	        <?php echo !empty($message) ? $message : ''; ?>
         	<?php echo !empty($table) ? $table : ''; ?>
-        </div>
-        <?php  echo !empty($pagination) ? '<p id="pagination">'.$pagination.'</p>' : ''; ?> 
+        <?php } ?>
     </fieldset>
+    
     </div>
         
 <?php

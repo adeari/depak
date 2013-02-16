@@ -71,6 +71,17 @@ class Propinsi_model extends CI_Model{
         $this->db->limit($limit,$offset);
         return $this->db->get()->num_rows();
     }
+    function getPropinsiNAMEByID($propinsiID) {
+    	$namaPropinsi = "";
+    	$this->db->select('namaPropinsi');
+    	$this->db->from($this->table);
+    	$this->db->where('propinsiID',$propinsiID);
+    	$rowDATA = $this->db->get()->result();
+    	foreach ($rowDATA as $data) {
+    		$namaPropinsi = $data->namaPropinsi;
+    	}
+    	return $namaPropinsi;
+    }
 }
 
 ?>

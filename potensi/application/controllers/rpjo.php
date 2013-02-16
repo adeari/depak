@@ -10,10 +10,10 @@
  *
  * @author domas
  */
-class rpentry extends CI_Controller{
+class rpjo extends CI_Controller{
 	//put your code here
 
-	function rpentry(){
+	function rpjo(){
 		parent::__construct();
 		$this->load->model('Aset_model','',TRUE);
 		$this->load->model('Propinsi_model','',TRUE);
@@ -32,45 +32,31 @@ class rpentry extends CI_Controller{
 		$this->viewdata();
 	}
 	
-	function detail(){
+	function rincianObjectPropinsi(){
 		if($this->session->userdata('login') == TRUE and ($this->session->userdata('level')!='User' or $this->session->userdata('level')!='Entry')){
-		
-			$data['title'] = $this->title;
-			$data['main_view'] = 'rpentry_view';
-			$perSonName = urldecode($this->uri->segment(3));
-			$data['person'] = anchor('rpentry',$perSonName);
-			$data['total'] = number_format($this->Aset_model->getCountRekapEntrybyCreatedBY($perSonName),0,",",".");
+			$propinsiID = 35;
+			$data['main_view'] = 'rpjo_view';
+			$data['main_view'] = 'rpjo_view';
+			$data['viewPage'] = "rincianPropinsi";
+				
+			$data['namaPropinsi'] = anchor('rpjo',$this->Propinsi_model->getPropinsiNAMEByID($propinsiID));
 			
-			if ($this->Aset_model->getCountRekapEntry()>0) {
-		
-				$tmpl = array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">',
-						'row_alt_start' => '<tr class="zebra">','row_alt_end' => '</tr>');
-		
-				$this->table->set_template($tmpl);
-				$this->table->set_empty("&nbsp;");
-				$cellJumlah = array('data' => 'Jumlah', 'width' => '10%');
-				$this->table->set_heading('No.','Tanggal',$cellJumlah);
-		
-				$i = 0 ;
-				$asets = $this->Aset_model->getRekapEntryEveryDatedependONCreatedBY($perSonName);
-				$totalAmount = 0;
-				foreach($asets as $row){
-					$cellNomor = array('data' => ++$i, 'style' => 'text-align: right', 'width' => '5%' );
-					$cellJumlah = array('data' => number_format($row->jumlah,0,",","."), 'style' => 'text-align: right');
-					$this->table->add_row($cellNomor,$row->created,$cellJumlah);
-					$totalAmount += $row->jumlah;
-				}
-				$cellJumlah = array('data' => number_format($totalAmount,0,",","."), 'colspan' => 3 ,'style' => 'text-align: right');
-				$this->table->add_row($cellJumlah);
-		
-				$data['table'] = $this->table->generate();
-			} else {
-				$data['message'] = 'Tidak ada data yang ditampilkan!';
+			$tmpl = array('table_open' => '<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">',
+					'row_alt_start' => '<tr class="zebra">','row_alt_end' => '</tr>');
+			$this->table->set_template($tmpl);
+			$this->table->set_empty("&nbsp;");
+			$cellJumlah = array('data' => 'Jumlah', 'width' => '10%');
+			$this->table->set_heading('No.','Golongan','Jenis Obyek','Kode',$cellJumlah);
+			$i = 0 ;
+			$asets = $this->Aset_model->getRincianPropinsi($propinsiID);
+			foreach ($asets as $row){
+				$cellNomor = array('data' => ++$i, 'style' => 'text-align: right', 'width' => '5%' );
+				$cellJumlah = array('data' => number_format($row->jumlah,0,",","."), 'style' => 'text-align: right');
+				$this->table->add_row($cellNomor,$row->golongan,$row->jenis,$row->jenis_aset,$cellJumlah);
 			}
-		
+			
+			$data['table'] = $this->table->generate();
 			$this->load->view('theme',$data);
-		}else{
-			redirect('home');
 		}
 	}
 
@@ -78,31 +64,17 @@ class rpentry extends CI_Controller{
 		if($this->session->userdata('login') == TRUE and ($this->session->userdata('level')!='User' or $this->session->userdata('level')!='Entry')){
 
 			$data['title'] = $this->title;
-			$data['main_view'] = 'rpentry_view';
+			$data['main_view'] = 'rpjo_view';
+			$data['viewPage'] = "propinsi";
+			$propinsiID = 35;
 			
+			$data['namaPropinsi'] = $this->Propinsi_model->getPropinsiNAMEByID($propinsiID);
 			
-			if ($this->Aset_model->getCountRekapEntry()>0) {
-				
-				$tmpl = array('table_open' => '<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">',
-						'row_alt_start' => '<tr class="zebra">','row_alt_end' => '</tr>');
-
-				$this->table->set_template($tmpl);
-				$this->table->set_empty("&nbsp;");
-				$cellJumlah = array('data' => 'Jumlah', 'width' => '10%');
-				$this->table->set_heading('No.','Petugas Entry Data',$cellJumlah);
-
-				$i = 0 ;
-				$asets = $this->Aset_model->getRekapEntry();
-				foreach($asets as $row){
-					$cellNomor = array('data' => ++$i, 'style' => 'text-align: right', 'width' => '5%' );
-					$cellJumlah = array('data' => number_format($row->jumlah,0,",","."), 'style' => 'text-align: right');
-					$this->table->add_row($cellNomor,anchor('rpentry/detail/'.$row->createdBy,$row->createdBy),$cellJumlah);
-				}
-				
-				$data['table'] = $this->table->generate();
-			} else {
-				$data['message'] = 'Tidak ada data yang ditampilkan!';
-			}
+			$data['tglSkr'] = date('d/m/Y');
+			$data['totalOFF'] = number_format($this->Aset_model->countAllAset(),0,",",".");
+			$data['rincianObject'] = anchor('rpjo/rincianObjectPropinsi','Rincian per Jenis Obyek');
+			$data['jmlObjekPerkabupaten'] = anchor('rpjo/perKabupaten','Jumlah obyek Per Kabupaten');
+			
 
 			$this->load->view('theme',$data);
 		}else{
@@ -143,9 +115,6 @@ class rpentry extends CI_Controller{
 
 
 	function createpdf(){
-		//(06:51:40 AM) Garuda Edwio: AsetNU-Kab.Blitar-Kec.Kademangan-20130212-0651
-		//(06:52:52 AM) Garuda Edwio: AsetNU-NamaKabupaten-NamaKecamatan-YYYYMMDD-HHMM
-		//(07:12:55 AM) Garuda Edwio: format 24 jam
 		$PDFame = "AsetNU-";
 		$kondisi ="";
 		if (strlen($this->input->get("propinsi"))>0)
