@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rincianPropinsi" language="groovy" pageWidth="612" pageHeight="792" columnWidth="498" leftMargin="86" rightMargin="28" topMargin="36" bottomMargin="21" uuid="028cdb8d-8448-4e3c-87d2-3e3320acfb0a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="186"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SELECT `newaset`.`jenis_aset`, `klasifikasi_aset`.`jenis`, `golongan`.`golongan`,format(count(*),0) as jmlView, count(*) as jumlah FROM (`newaset`) JOIN `klasifikasi_aset` ON `newaset`.`jenis_aset` = `klasifikasi_aset`.`kode_klasifikasi` JOIN `golongan` ON `klasifikasi_aset`.`golongan` = `golongan`.`id` WHERE `propid` = 35 GROUP BY `newaset`.`jenis_aset`, `klasifikasi_aset`.`jenis`, `golongan`.`golongan` ORDER BY `jenis_aset` asc"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rinciTitel" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Rincian Jumlah masing-masing obyek di Propinsi Jawa Timur"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{qryData}]]>
+	</queryString>
+	<field name="jenis_aset" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="golongan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jmlView" class="java.lang.String"/>
+	<field name="jumlah" class="java.lang.Long"/>
+	<variable name="jmlView" class="java.lang.String">
+		<variableExpression><![CDATA[$F{jumlah}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="53558550-cd8d-44aa-888c-ed2ef2bda745" x="0" y="0" width="498" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rinciTitel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cb688061-d1f3-47cd-a4ea-fdd6fb881696" stretchType="RelativeToTallestObject" x="0" y="0" width="25" height="17"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="585844ad-5d56-431a-8d82-c60a213d56a7" stretchType="RelativeToTallestObject" x="25" y="0" width="173" height="17"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Golongan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b468643c-78ca-4a82-a524-706cc9c08984" stretchType="RelativeToTallestObject" x="198" y="0" width="179" height="17"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Jenis Obyek]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a6a41ed3-2ccd-462a-87e1-abd34c27ffcc" stretchType="RelativeToTallestObject" x="377" y="0" width="69" height="17"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Kode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f4fbd278-3138-4c43-b981-1746555fce42" stretchType="RelativeToTallestObject" x="446" y="0" width="52" height="17"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="021952db-acc1-4d00-82b3-8d5d9b12a19b" stretchType="RelativeToTallestObject" x="0" y="0" width="25" height="13" isPrintWhenDetailOverflows="true"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0e02dc37-f903-448c-bc43-10674e4cc8fa" stretchType="RelativeToTallestObject" x="25" y="0" width="173" height="13" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{golongan}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e064251f-ea82-4e57-bf2d-3b5c9bedd344" stretchType="RelativeToTallestObject" x="198" y="0" width="179" height="13" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jenis}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="76a78c22-4322-43d8-abdf-75b11b0065d6" stretchType="RelativeToTallestObject" x="377" y="0" width="69" height="13" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jenis_aset}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7e6fe326-c7e3-4334-ae40-bf4062d7b366" stretchType="RelativeToTallestObject" x="446" y="0" width="52" height="13" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="0" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jmlView}.replace(",", ".")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

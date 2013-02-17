@@ -727,6 +727,176 @@ class Aset_model extends CI_Model{
     	$this->db->from($this->table);
     	return $this->db->get()->result();
     }
+    
+    function getRincianPropinsiQRY($propinsiID) {
+    	$this->db->select($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan,count(*) as jumlah");
+    	$this->db->group_by($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('propid',$propinsiID);
+    	$this->db->order_by('jenis_aset', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->last_query();
+    }
+    
+    function getCountRincianPropinsi($propinsiID) {
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('propid',$propinsiID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getRincianKabupaten($kabupatenD) {
+    	$this->db->select($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan,count(*) as jumlah");
+    	$this->db->group_by($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kabid',$kabupatenD);
+    	$this->db->order_by('jenis_aset', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountRincianKabupaten($kabupatenD) {
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kabid',$kabupatenD);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getRincianKecamatan($kecamatanID) {
+    	$this->db->select($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan,count(*) as jumlah");
+    	$this->db->group_by($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kecid',$kecamatanID);
+    	$this->db->order_by('jenis_aset', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountRincianKecamatan($kecamatanID) {
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kecid',$kecamatanID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getRincianDesa($desaID) {
+    	$this->db->select($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan,count(*) as jumlah");
+    	$this->db->group_by($this->table.".jenis_aset,klasifikasi_aset.jenis,golongan.golongan");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kelid',$desaID);
+    	$this->db->order_by('jenis_aset', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountRincianDesa($desaID) {
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('klasifikasi_aset', $this->table.'.jenis_aset = klasifikasi_aset.kode_klasifikasi');
+    	$this->db->join('golongan', 'klasifikasi_aset.golongan = golongan.id');
+    	$this->db->where('kelid',$desaID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getlevelKabupaten($propinsiID){
+    	$this->db->select("kabid,namaKota,count(*) as jumlah");
+    	$this->db->join('tbkota', $this->table.'.kabid = tbkota.kotaID');
+    	$this->db->where('propid',$propinsiID);
+    	$this->db->group_by("kabid,namaKota");
+    	$this->db->order_by('namaKota', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountlevelKabupaten($propinsiID){
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('tbkota', $this->table.'.kabid = tbkota.kotaID');
+    	$this->db->where('propid',$propinsiID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getlevelDesa($kecamatanID){
+    	$this->db->select("kelid,namaKelurahan,count(*) as jumlah");
+    	$this->db->join('tbkelurahan', $this->table.'.kelid = tbkelurahan.kelurahanID');
+    	$this->db->where('kecid',$kecamatanID);
+    	$this->db->group_by("kelid,namaKelurahan");
+    	$this->db->order_by('namaKelurahan', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountlevelDesa($kecamatanID){
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('tbkelurahan', $this->table.'.kelid = tbkelurahan.kelurahanID');
+    	$this->db->where('kecid',$kecamatanID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
+    function getlevelKecamatan($kabupatenID){
+    	$this->db->select("kecid,namaKecamatan,count(*) as jumlah");
+    	$this->db->join('tbkecamatan', $this->table.'.kecid = tbkecamatan.kecamatanID');
+    	$this->db->where('kabid',$kabupatenID);
+    	$this->db->group_by("kecid,namaKecamatan");
+    	$this->db->order_by('namaKecamatan', 'asc');
+    	$this->db->from($this->table);
+    	return $this->db->get()->result();
+    }
+    
+    function getCountlevelKecamatan($kabupatenID){
+    	$countThis = 0;
+    	$this->db->select("count(*) as jumlah");
+    	$this->db->join('tbkecamatan', $this->table.'.kecid = tbkecamatan.kecamatanID');
+    	$this->db->where('kabid',$kabupatenID);
+    	$this->db->from($this->table);
+    	$hasil = $this->db->get()->result();
+    	foreach($hasil as $data){
+    		$countThis = $data->jumlah;
+    	}
+    	return $countThis;
+    }
+    
 }
 
 ?>

@@ -27,53 +27,102 @@ public class runReport {
         java.util.Map parameter = new java.util.HashMap();
 
         fileReport = direktoryReport + args[3] + ".jasper";
-        try {
-            if (args[5] != null) {
-                if (args[5].length() > 0) {
-                    thisCondition += " propid = " + args[5] + " ";
-                }
-            }
-        } catch (Exception ex) {
+        if (args[3].equalsIgnoreCase("rincianKabupaten")) {
+            fileReport = direktoryReport + "rincianPropinsi.jasper";
         }
 
-        try {
-            if (args[6] != null) {
-                if (args[6].length() > 0) {
-                    if (thisCondition.length() > 0) {
-                        thisCondition += " and ";
+        if (args[3].equalsIgnoreCase("newaasetLaporan")) {
+            try {
+                if (args[5] != null) {
+                    if (args[5].length() > 0) {
+                        thisCondition += " propid = " + args[5] + " ";
                     }
-                    thisCondition += " kabid = " + args[6] + " ";
                 }
+            } catch (Exception ex) {
             }
-        } catch (Exception ex) {
-        }
 
-        try {
-            if (args[7] != null) {
-                if (args[7].length() > 0) {
-                    if (thisCondition.length() > 0) {
-                        thisCondition += " and ";
+            try {
+                if (args[6] != null) {
+                    if (args[6].length() > 0) {
+                        if (thisCondition.length() > 0) {
+                            thisCondition += " and ";
+                        }
+                        thisCondition += " kabid = " + args[6] + " ";
                     }
-                    thisCondition += " kecid = " + args[7] + " ";
                 }
+            } catch (Exception ex) {
             }
-        } catch (Exception ex) {
+
+            try {
+                if (args[7] != null) {
+                    if (args[7].length() > 0) {
+                        if (thisCondition.length() > 0) {
+                            thisCondition += " and ";
+                        }
+                        thisCondition += " kecid = " + args[7] + " ";
+                    }
+                }
+            } catch (Exception ex) {
+            }
+            if (thisCondition.length() > 0) {
+                thisCondition = " where " + thisCondition;
+            }
+            qryData = "select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid"
+                    + ",(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten"
+                    + ",(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan"
+                    + ",(select c.namaKelurahan from tbkelurahan c where c.kelurahanID=kelid ) as  namaKelurahan"
+                    + "  from newaset" + thisCondition + " order by kecid,id";
+        } else if (args[3].equalsIgnoreCase("rincianPropinsi")) {
+            qryData = "SELECT newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan,format(count(*),0) as jmlView, "
+                    + "count(*) as jumlah "
+                    + "FROM (newaset) "
+                    + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE propid = " + args[5]
+                    + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
+        } else if (args[3].equalsIgnoreCase("rincianKabupaten")) {
+            qryData = "SELECT newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan,format(count(*),0) as jmlView, "
+                    + "count(*) as jumlah "
+                    + "FROM (newaset) "
+                    + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE kabid = " + args[5]
+                    + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
         }
-        if (thisCondition.length() > 0) {
-            thisCondition = " where " + thisCondition;
-        }
-        qryData = "select id,jenis_aset,ket_jenis,nama_aset,lokasi,ranting,kecid"
-                + ",(select b.namaKota from tbkota b where b.kotaID=kabid) as namaKabupaten"
-                + ",(select a.namaKecamatan from tbkecamatan a where a.kecamatanID=kecid) as namaKecamatan"
-                + ",(select c.namaKelurahan from tbkelurahan c where c.kelurahanID=kelid ) as  namaKelurahan"
-                + "  from newaset" + thisCondition + " order by kecid,id";
 
         String klaSS = "jdbc:mysql://localhost/potensi?user=nujatim&password=klaser";
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             java.sql.Connection conec = java.sql.DriverManager.getConnection(klaSS);
             parameter.put("qryData", qryData);
-            parameter.put("imgPath", direktoryReport+"logoNU.png");
+            
+            if (args[3].equalsIgnoreCase("rincianPropinsi")) {
+                String namaPropinsi = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaPropinsi += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di Propinsi "+namaPropinsi);
+            } else if (args[3].equalsIgnoreCase("rincianKabupaten")) {
+                String namaKabupaten = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaKabupaten += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di  "+namaKabupaten);
+            }
+            
+            parameter.put("imgPath", direktoryReport + "logoNU.png");
             net.sf.jasperreports.engine.JasperPrint jasperPrint = net.sf.jasperreports.engine.JasperFillManager.fillReport(fileReport, parameter, conec);
             if (debugging) {
                 net.sf.jasperreports.view.JasperViewer jasperViewer = new net.sf.jasperreports.view.JasperViewer(jasperPrint, false);
@@ -93,9 +142,7 @@ public class runReport {
 
             System.exit(0);
         } catch (Exception ex) {
-            if (debugging) {
                 System.out.println(" error " + ex.getMessage());
-            }
             System.exit(0);
         }
     }

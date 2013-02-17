@@ -13,29 +13,30 @@
     echo !empty($flashmessage) ? '<p>'.$flashmessage.'</p>' : '';
 ?>
 <script>
-function PrintDataHere(){
+<?php  if (strcmp($viewPage,"rincianPropinsi")==0) {  ?>
+function createPDFRinciPropinsi(str){
 	myWindow=window.open(
-			'<?php echo "http://".$_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']."/printDataHere"; ?>'
-			+'?propinsi='+document.report_form.propinsi.value
-			+'&kota='+document.report_form.kota.value
-			+'&kecamatan='+document.report_form.kecamatan.value
+			'<?php echo $linkExport."/createpdf"; ?>'
+			+'?jenis=rinciPropinsi'
+			+'&propinsiID='+str
 			,'Report','width=200,height=100');
 	myWindow.focus();
 }
-function createPDF(){
+<?php } else if (strcmp($viewPage,"rincianKabupaten")==0) {  ?>
+function createPDFRinciKabupaten(str){
 	myWindow=window.open(
-			'<?php echo "http://".$_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']."/createpdf"; ?>'
-			+'?propinsi='+document.report_form.propinsi.value
-			+'&kota='+document.report_form.kota.value
-			+'&kecamatan='+document.report_form.kecamatan.value
+			'<?php echo $linkExport."/createpdf"; ?>'
+			+'?jenis=rinciKabupaten'
+			+'&kabupatenID='+str
 			,'Report','width=200,height=100');
 	myWindow.focus();
 }
+<?php }  ?>
 </script>
     <div>
     
     <fieldset>
-        <legend>Rekapitulkasi jumlah object</legend>
+        <legend>Rekapitulasi jumlah object</legend>
         <br>
         <?php  if (strcmp($viewPage,"propinsi")==0) { ?>
 	        Total Jumlah Obyek di <?php echo $namaPropinsi;?> terhitung sampai tanggal (<?php echo $tglSkr;?>) adalah <?php echo $totalOFF;?>
@@ -48,8 +49,62 @@ function createPDF(){
          	Rincian Jumlah masing-masing obyek di Propinsi <?php echo $namaPropinsi;?>
          	<br>
 	        <br>
+	        <?php if (!empty($table)) { ?>
+		        <input type="button" name="btn" onClick="createPDFRinciPropinsi(<?php echo $propinsiID;?>)" value="Export PDF" />
+		        <div width="100%" align="center">
+	        		<?php echo $table; ?>
+	        	</div>
+	        <?php } else echo !empty($message) ? $message : ''; ?>
+        <?php } else if (strcmp($viewPage,"levelKabupaten")==0) {  ?>
+         	Rekap jumlah obyek Per Kabupaten di Propinsi <?php echo $namaPropinsi;?>
+         	<br>
+	        <br>
 	        <?php echo !empty($message) ? $message : ''; ?>
-        	<?php echo !empty($table) ? $table : ''; ?>
+	        <div width="100%" align="center">
+        		<?php echo !empty($table) ? $table : ''; ?>
+        	</div>
+        <?php } else if (strcmp($viewPage,"rincianKabupaten")==0) {  ?>
+         	Rincian Jumlah masing-masing obyek di <?php echo $namaKabupaten;?>
+         	<br>
+	        <br>
+	        <?php if (!empty($table)) { ?>
+		        <input type="button" name="btn" onClick="createPDFRinciKabupaten(<?php echo $kabupatenID;?>)" value="Export PDF" />
+		        <div width="100%" align="center">
+	        		<?php echo $table; ?>
+	        	</div>
+	        <?php } else echo !empty($message) ? $message : ''; ?>
+        <?php } else if (strcmp($viewPage,"levelKecamatan")==0) {  ?>
+         	Rekap jumlah obyek Per Kecamatan di <?php echo $namaKabupaten;?>
+         	<br>
+	        <br>
+	        <?php echo !empty($message) ? $message : ''; ?>
+	        <div width="100%" align="center">
+        		<?php echo !empty($table) ? $table : ''; ?>
+        	</div>
+        <?php } else if (strcmp($viewPage,"rincianKecamatan")==0) {  ?>
+         	Rincian Jumlah masing-masing obyek di <?php echo $namaKecamatan;?>
+         	<br>
+	        <br>
+	        <?php echo !empty($message) ? $message : ''; ?>
+	        <div width="100%" align="center">
+        		<?php echo !empty($table) ? $table : ''; ?>
+        	</div>
+        <?php } else if (strcmp($viewPage,"levelDesa")==0) {  ?>
+         	Rekap jumlah obyek Per Desa di <?php echo $namaKecamatan;?>
+         	<br>
+	        <br>
+	        <?php echo !empty($message) ? $message : ''; ?>
+	        <div width="100%" align="center">
+        		<?php echo !empty($table) ? $table : ''; ?>
+        	</div>
+        <?php } else if (strcmp($viewPage,"rincianDesa")==0) {  ?>
+         	Rincian Jumlah masing-masing obyek di Desa <?php echo $namaDesa;?>
+         	<br>
+	        <br>
+	        <?php echo !empty($message) ? $message : ''; ?>
+	        <div width="100%" align="center">
+        		<?php echo !empty($table) ? $table : ''; ?>
+        	</div>
         <?php } ?>
     </fieldset>
     
