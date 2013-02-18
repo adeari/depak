@@ -27,7 +27,9 @@ public class runReport {
         java.util.Map parameter = new java.util.HashMap();
 
         fileReport = direktoryReport + args[3] + ".jasper";
-        if (args[3].equalsIgnoreCase("rincianKabupaten")) {
+        if (args[3].equalsIgnoreCase("rincianKabupaten")
+                ||args[3].equalsIgnoreCase("rincianKecamatan")
+                ||args[3].equalsIgnoreCase("rincianDesa")) {
             fileReport = direktoryReport + "rincianPropinsi.jasper";
         }
 
@@ -77,14 +79,28 @@ public class runReport {
                     + "count(*) as jumlah "
                     + "FROM (newaset) "
                     + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
-                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE propid = " + args[5]
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE newaset.propid = " + args[5]
                     + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
         } else if (args[3].equalsIgnoreCase("rincianKabupaten")) {
             qryData = "SELECT newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan,format(count(*),0) as jmlView, "
                     + "count(*) as jumlah "
                     + "FROM (newaset) "
                     + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
-                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE kabid = " + args[5]
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE newaset.kabid = " + args[5]
+                    + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
+        } else if (args[3].equalsIgnoreCase("rincianKecamatan")) {
+            qryData = "SELECT newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan,format(count(*),0) as jmlView, "
+                    + "count(*) as jumlah "
+                    + "FROM (newaset) "
+                    + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE newaset.kecid = " + args[5]
+                    + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
+        } else if (args[3].equalsIgnoreCase("rincianDesa")) {
+            qryData = "SELECT newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan,format(count(*),0) as jmlView, "
+                    + "count(*) as jumlah "
+                    + "FROM (newaset) "
+                    + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
+                    + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE newaset.kelid = " + args[5]
                     + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
         }
 
@@ -119,7 +135,33 @@ public class runReport {
                         ada = false;
                     }
                 }
-                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di  "+namaKabupaten);
+                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di "+namaKabupaten);
+            } else if (args[3].equalsIgnoreCase("rincianKecamatan")) {
+                String namaKecamatan = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaKecamatan += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di "+namaKecamatan);
+            } else if (args[3].equalsIgnoreCase("rincianDesa")) {
+                String namaDesa = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaDesa += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di Desa "+namaDesa);
             }
             
             parameter.put("imgPath", direktoryReport + "logoNU.png");

@@ -72,6 +72,9 @@ class rpjo extends CI_Controller{
 			$kabupatenID = $this->uri->segment(4);
 			$data['main_view'] = 'rpjo_view';
 			$data['viewPage'] = "rincianKecamatan";
+			$data['linkExport'] = site_url("rpjo");
+			
+			$data['kecamatanID'] = $kecamaatanID;
 	
 			$data['namaKecamatan'] = anchor('rpjo/perKecamatan/'.$kabupatenID,$this->Kecamatan_model->getNamaKecamatanByKecamatanID($kecamaatanID));
 	
@@ -102,10 +105,12 @@ class rpjo extends CI_Controller{
 	function perDesarinci(){
 		if($this->session->userdata('login') == TRUE and ($this->session->userdata('level')!='User' or $this->session->userdata('level')!='Entry')){
 			$desaID = $this->uri->segment(3);
+			$data['desaID'] = $desaID;
 			$kecamaatanID = $this->uri->segment(4);
 			$kebupatenID = $this->uri->segment(5);
 			$data['main_view'] = 'rpjo_view';
 			$data['viewPage'] = "rincianDesa";
+			$data['linkExport'] = site_url("rpjo");
 	
 			$data['namaDesa'] = anchor('rpjo/perDesa/'.$kecamaatanID."/".$kebupatenID,$this->Kelurahan_model->getNamaKelurahanbyId($desaID));
 	
@@ -334,6 +339,62 @@ class rpjo extends CI_Controller{
 			."reportNU.jar pdf "
 			.$this->config->config['directoryJarReport']." "
 			.$this->config->config['directoryPDFReport']." rincianKabupaten ".$pdfFile." ".$kabupatenID." ".$kabupatenName;
+			
+			$path=$this->config->config['directoryPDFReport'];
+			$handle=opendir($path);
+			$dateNOW = date("Ymd");
+			while (($file = readdir($handle))!==false) {
+				$truFILe = $path.$file;
+				$filesDAte = substr($file,(strlen($file)-17),8);
+				if (strcmp($dateNOW,$filesDAte)!=0&&
+						strcmp($file,".")!=0&&
+						strcmp($file,"..")!=0
+				) {
+					unlink($truFILe);
+				}
+			}
+			closedir($handle);
+			exec($java);
+			header('Content-type: application/pdf');
+			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
+			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			readfile($ResultPDF);
+		} else if (strcmp($reportSelected,"rinciKecamatan")==0) {
+			$kecamatanID = $this->input->get("kecamatanID");
+			$kecamatanName = $this->Kecamatan_model->getNamaKecamatanByKecamatanID($kecamatanID);
+			$pdfFile = "rincian_".str_replace(" ","_",$kecamatanName)."_".date('Ymd-Hi');
+			$java = "java -jar ".$this->config->config['directoryJarReport']
+			."reportNU.jar pdf "
+			.$this->config->config['directoryJarReport']." "
+			.$this->config->config['directoryPDFReport']." rincianKecamatan ".$pdfFile." ".$kecamatanID." ".$kecamatanName;
+			
+			$path=$this->config->config['directoryPDFReport'];
+			$handle=opendir($path);
+			$dateNOW = date("Ymd");
+			while (($file = readdir($handle))!==false) {
+				$truFILe = $path.$file;
+				$filesDAte = substr($file,(strlen($file)-17),8);
+				if (strcmp($dateNOW,$filesDAte)!=0&&
+						strcmp($file,".")!=0&&
+						strcmp($file,"..")!=0
+				) {
+					unlink($truFILe);
+				}
+			}
+			closedir($handle);
+			exec($java);
+			header('Content-type: application/pdf');
+			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
+			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			readfile($ResultPDF);
+		} else if (strcmp($reportSelected,"rinciDesa")==0) {
+			$desaID = $this->input->get("desaID");
+			$desaName = $this->Kelurahan_model->getNamaKelurahanbyId($desaID);
+			$pdfFile = "rincian_desa_".str_replace(" ","_",$desaName)."_".date('Ymd-Hi');
+			$java = "java -jar ".$this->config->config['directoryJarReport']
+			."reportNU.jar pdf "
+			.$this->config->config['directoryJarReport']." "
+			.$this->config->config['directoryPDFReport']." rincianDesa ".$pdfFile." ".$desaID." ".$desaName;
 			
 			$path=$this->config->config['directoryPDFReport'];
 			$handle=opendir($path);
