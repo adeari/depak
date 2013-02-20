@@ -36,31 +36,23 @@ function createPDF(){
     <div>
     <fieldset>
         <legend>REKAPITULASI ENTRY DATA ASET</legend>
-        <table width="100%" cellpadding="0" cellspacing="0" border="0">
-            <tr>        
-                <td><span class="propinsi"></span></td>
-            </tr>
-            <tr>
-                <td><span class="kota"></span></td>
-            </tr>
-            <tr>
-                <td><span class="kecamatan"></span></td>
-            </tr>
-            <?php if (!empty($table)) { ?>
-	            <tr>
-	                <td align="center">
-	                <input type="button" name="btn" onClick="createPDF()" value="Export PDF" />
-	                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                <input type="button" name="btn" onClick="PrintDataHere()" value="Print" />
-	                </td>
-	            </tr>
-            <?php } ?>
-        </table>
-        <br>
-        <br>
+        <div style='margin-bottom:5px;width:100%;'>
+	        <div style="float:left;margin-right:5px;"><span class="propinsi"></span></div>
+	        <div style="float:left;margin-right:5px;"><span class="kota"></span></div>
+	        <div><span class="kecamatan"></span></div>	        
+        </div>
         <?php echo !empty($message) ? $message : ''; ?>
-        <?php echo !empty($table) ? $table : ''; ?>
-        <?php  echo !empty($pagination) ? '<p id="pagination">'.$pagination.'</p>' : ''; ?> 
+        <?php echo !empty($table) ? $table : ''; ?>  
+        <div style='margin-top:5px;width:100%;'>
+        <?php  echo !empty($pagination) ? '<div style="float:left">  <p id="pagination">'.$pagination.'</p></div>' : ''; ?>
+        <?php if (!empty($table)) { ?>
+        <div style="float:right"> 
+        <p>
+	       <button onClick="createPDF()" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button>
+	       </p>
+	    </div>
+        <?php } ?> 
+        </div>
     </fieldset>
     </div>
 </form>

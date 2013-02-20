@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="levelKabupaten" language="groovy" pageWidth="612" pageHeight="792" columnWidth="491" leftMargin="93" rightMargin="28" topMargin="36" bottomMargin="20" uuid="3c179472-7c29-4740-b215-5cf48fcc1534">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["select a.kelid,b.namaKelurahan,count(*) as jumlah,format(count(*),0) as jmlView from newaset a inner join tbkelurahan b on a.kelid = b.kelurahanID group by a.kelid,b.namaKelurahan order by b.namaKelurahan"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="namaKecamatan" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Jawa Timur"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{qryData}]]>
+	</queryString>
+	<field name="kelid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="namaKelurahan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah" class="java.lang.Long"/>
+	<field name="jmlView" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="098129a9-3136-4ec3-97e3-311d770f331a" x="0" y="0" width="252" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Rekap jumlah obyek Per Desa di ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="05985c0c-c53b-4774-a940-171f1185a35c" x="208" y="0" width="239" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{namaKecamatan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a4f8340d-a312-4f5d-ba83-9ad2aad6b617" x="35" y="0" width="391" height="13"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Desa / Kelurahan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0e10a33-ed3e-42b0-92a8-969d47f43421" x="426" y="0" width="65" height="13"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="952a9f6a-e7a5-43b8-9719-47a7829c998c" x="0" y="0" width="35" height="13"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement uuid="75e41423-aa6a-4bb4-95cc-afdf64ac4361" x="35" y="0" width="391" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaKelurahan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d9138631-e9f9-4cd7-a816-f338691810a1" x="426" y="0" width="65" height="13"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jmlView}.replace(",",".")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="547055ea-36c5-42c0-9174-a7dc3eb9b5ed" x="0" y="0" width="35" height="13"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

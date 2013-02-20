@@ -137,7 +137,7 @@ class Kecamatan extends CI_Controller{
         $kotaID = $this->uri->segment(3);
         $kecID = $this->uri->segment(4);
         $kecamatan = $this->Kecamatan_model->getKecamatan($kotaID);
-        echo 'Kecamatan<br />';
+        echo 'Kecamatan : ';
         echo '<SELECT name="kecamatan" onchange="document.report_form.submit()" style="width:220px">';
         echo '<option value="">-- pilih --</option>';
         foreach($kecamatan as $data){

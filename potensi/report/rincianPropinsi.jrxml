@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rincianPropinsi" language="groovy" pageWidth="612" pageHeight="792" columnWidth="498" leftMargin="86" rightMargin="28" topMargin="36" bottomMargin="21" uuid="028cdb8d-8448-4e3c-87d2-3e3320acfb0a">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="186"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["SELECT `newaset`.`jenis_aset`, `klasifikasi_aset`.`jenis`, `golongan`.`golongan`,format(count(*),0) as jmlView, count(*) as jumlah FROM (`newaset`) JOIN `klasifikasi_aset` ON `newaset`.`jenis_aset` = `klasifikasi_aset`.`kode_klasifikasi` JOIN `golongan` ON `klasifikasi_aset`.`golongan` = `golongan`.`id` WHERE `propid` = 35 GROUP BY `newaset`.`jenis_aset`, `klasifikasi_aset`.`jenis`, `golongan`.`golongan` ORDER BY `jenis_aset` asc"]]></defaultValueExpression>

@@ -102,7 +102,24 @@ public class runReport {
                     + "JOIN klasifikasi_aset ON newaset.jenis_aset = klasifikasi_aset.kode_klasifikasi "
                     + "JOIN golongan ON klasifikasi_aset.golongan = golongan.id WHERE newaset.kelid = " + args[5]
                     + " GROUP BY newaset.jenis_aset, klasifikasi_aset.jenis, golongan.golongan ORDER BY jenis_aset asc";
+        } else if (args[3].equalsIgnoreCase("levelKabupaten")) {
+            qryData = "select a.kabid,b.namaKota,count(*) as jumlah,format(count(*),0) as jmlView "
+                    + "from newaset a inner join tbkota b on a.kabid = b.kotaID where a.propid = " + args[5]
+                    + " group by a.kabid,b.namaKota order by b.namaKota";
+        } else if (args[3].equalsIgnoreCase("levelKecamatan")) {
+            qryData = "select a.kecid,b.namaKecamatan,count(*) as jumlah,"
+                    + "format(count(*),0) as jmlView from newaset a "
+                    + "inner join tbkecamatan b on a.kecid = b.kecamatanID where a.kabid = " + args[5]
+                    + " group by a.kecid,b.namaKecamatan "
+                    + "order by b.namaKecamatan";
+        } else if (args[3].equalsIgnoreCase("levelDesa")) {
+            qryData = "select a.kelid,b.namaKelurahan,count(*) as jumlah,format(count(*),0) as jmlView "
+                    + "from newaset a "
+                    + "inner join tbkelurahan b on a.kelid = b.kelurahanID where a.kecid =" + args[5]
+                    + " group by a.kelid,b.namaKelurahan order by b.namaKelurahan";
         }
+        
+        
 
         String klaSS = "jdbc:mysql://localhost/potensi?user=nujatim&password=klaser";
         try {
@@ -162,6 +179,45 @@ public class runReport {
                     }
                 }
                 parameter.put("rinciTitel", "Rincian Jumlah masing-masing obyek di Desa "+namaDesa);
+            } else if (args[3].equalsIgnoreCase("levelKabupaten")) {
+                String namaPropinsi = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaPropinsi += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("namaPropinsi", namaPropinsi);
+            } else if (args[3].equalsIgnoreCase("levelKecamatan")) {
+                String namaKabupaten = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaKabupaten += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("namaKabupaten", namaKabupaten);
+            } else if (args[3].equalsIgnoreCase("levelDesa")) {
+                String namaKecamatan = args[6];
+                int i = 7;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        namaKecamatan += " " + args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+                parameter.put("namaKecamatan", namaKecamatan);
             }
             
             parameter.put("imgPath", direktoryReport + "logoNU.png");

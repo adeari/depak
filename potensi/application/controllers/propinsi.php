@@ -169,7 +169,7 @@ class Propinsi extends CI_Controller{
     function getPropinsiInRPaset(){
     	$propID = substr($this->uri->segment(3),0,2);
     	$propinsi = $this->Propinsi_model->getPropinsi();
-    	echo 'Propinsi<br />';
+    	echo 'Propinsi : ';
     	echo '<SELECT name="propinsi" onchange="ambil_kotaInRPaset($(this).val(),true)" style="width:220px">';
     	echo '<option value="">-- pilih --</option>';
     	foreach($propinsi as $data){
