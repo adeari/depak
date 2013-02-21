@@ -90,6 +90,23 @@ class Kelurahan extends CI_Controller{
         echo '</select>';
     }
     
+    function getKelurahanSearch(){
+    	$kecamatanID = $this->uri->segment(3);
+    	$kelID = $this->uri->segment(4);
+    	$kelurahan = $this->Kelurahan_model->getKelurahan($kecamatanID);
+    	echo 'Kelurahan<br />';
+    	echo '<SELECT name="kelurahan" onchange="getNewAsetID($(this).val())" style="width:220px">';
+    	echo '<option value="">-- pilih --</option>';
+    	foreach($kelurahan as $data){
+    		if($data->kelurahanID == $kelID){
+    			echo '<option value="' . $data->kelurahanID . '" selected>' . $data->namaKelurahan . '</option>';
+    		}else{
+    			echo '<option value="' . $data->kelurahanID . '">' . $data->namaKelurahan . '</option>';
+    		}
+    	}
+    	echo '</select>';
+    }
+    
     function getRekapKel(){
         $kecamatanID = substr($this->uri->segment(3),0,6);
         $kelurahan = $this->Kelurahan_model->getKelurahan($kecamatanID);

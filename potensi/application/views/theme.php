@@ -102,6 +102,8 @@
 			echo "ambil_propInRPaset(".$propinsiID.",false,".$kotaID.",".$kecamatanID.");";
 		  } else if(strcmp($this->uri->segment(1),'rpentry')==0){
 			$kosong ="";
+          }else if(strcmp($this->uri->segment(1),'search')==0){
+              echo 'ambil_propSearch('.$propinsiID.','.$kotaID.','.$kecamatanID.','.$kelID.');';
           }else{
               echo 'ambil_prop('. $propID .');';
           }

@@ -38,6 +38,43 @@ class Search extends CI_Controller{
         if($this->session->userdata('login') == TRUE){
             $data['title'] = $this->title;
             $data['h2_title'] = 'Pencarian Data Aset';
+
+            $dataThis = $this->Search_model->getSearchByID($this->session->userdata('userID'));
+            $propid = '\'\'';
+            $kotaID = '\'\'';
+            $keciD = '\'\'';
+            $kelID = '\'\'';
+            $jenis = '\'\'';
+            $status = '\'\'';
+            $bukti = '\'\'';
+            $pengelola = '\'\'';
+            foreach ($dataThis as $row) {
+            	if (strlen($row->propinsi)>0)
+            		$propid = $row->propinsi;
+            	if (strlen($row->kota)>0)
+            		$kotaID = $row->kota;
+            	if (strlen($row->kecamatan)>0)
+            		$keciD = $row->kecamatan;
+            	if (strlen($row->kelurahan)>0)
+            		$kelID = $row->kelurahan;
+            	if (strlen($row->jenis_aset)>0)
+            		$jenis = $row->jenis_aset;
+            	if (strlen($row->status_tanah)>0)
+            		$status = $row->status_tanah;
+            	if (strlen($row->bukti_milik)>0)
+            		$bukti = $row->bukti_milik;
+            	if (strlen($row->pengelola)>0)
+            		$pengelola = $row->pengelola;
+            }
+            
+            $data['propinsiID'] = $propid;
+            $data['kotaID'] = $kotaID;
+            $data['kecamatanID'] = $keciD;
+            $data['kelID'] = $kelID;
+            $data['jenisAset'] = $jenis;
+            $data['statusAset'] = $status;
+            $data['buktiAset'] = $bukti;
+            $data['pengelolaAset'] = $pengelola;
             
             $data['form_action'] = site_url('search/simpan');
             $data['link'] = array('link_back'=>  anchor('search/','kembali'));
@@ -60,10 +97,20 @@ class Search extends CI_Controller{
         $bukti = $this->input->post('bukti');
         $pengelola = $this->input->post('pengelola');
         
-        $search = array('propinsi'=>$propID,'kota'=>$kotaID,'kecamatan'=>$kecID,
-            'kelurahan'=>$kelID,'ranting'=>$ranting,'jenis_aset'=>$jenis,
-            'status_tanah'=>$status,'bukti_milik'=>$bukti,'pengelola'=>$pengelola);
-        $this->Search_model->update(1,$search);
+        
+        if ($this->Search_model->isExist($this->session->userdata('userID'))) {
+        	$search = array('propinsi'=>$propID,'kota'=>$kotaID,'kecamatan'=>$kecID,
+        			'kelurahan'=>$kelID,'ranting'=>$ranting,'jenis_aset'=>$jenis,
+        			'status_tanah'=>$status,'bukti_milik'=>$bukti,'pengelola'=>$pengelola);
+        	$this->Search_model->update($this->session->userdata('userID'),$search);
+        } else {
+	        $search = array( 'id' => $this->session->userdata('userID'),
+	        		'propinsi'=>$propID,'kota'=>$kotaID,'kecamatan'=>$kecID,
+	            'kelurahan'=>$kelID,'ranting'=>$ranting,'jenis_aset'=>$jenis,
+	            'status_tanah'=>$status,'bukti_milik'=>$bukti,'pengelola'=>$pengelola);
+	        $this->Search_model->add($search);
+        }
+        
         $this->cari();
     }
     
@@ -72,6 +119,12 @@ class Search extends CI_Controller{
         $data['title'] = $this->title;
         $data['h2_title'] = 'Pencarian Data Aset';
         $data['main_view'] = 'view_data';
+        
+        $data['propinsiID'] = '\'\'';
+        $data['kotaID'] = '\'\'';
+        $data['kecamatanID'] = '\'\'';
+        $data['kelID'] = '\'\'';
+        
         $offset_segment = 3;
         $offset = $this->uri->segment($offset_segment);
         $row = $this->Search_model->getLastByID(1)->row();

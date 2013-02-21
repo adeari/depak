@@ -16,6 +16,17 @@ function ambil_prop(id){
     });
 }
 
+function ambil_propSearch(id,kotaID,kecamatanID,kelid) {
+    $.ajax({
+       url: "http://localhost/potensi/index.php/propinsi/getPropinsi/"+id,
+       success: function(msg){
+           $('.propinsi').html(msg);
+           ambil_kotaSearch(kotaID,kecamatanID,kelid);
+       },
+       dataType: "html"
+    });
+}
+
 function ambil_propInRPaset(id,posting,kotaID,kecID){
     $.ajax({
        url: "http://localhost/potensi/index.php/propinsi/getPropinsiInRPaset/"+id,
@@ -33,6 +44,17 @@ function ambil_kotaInRPaset(id,posting,kotaID,kecID){
         success: function(msg){
             $('.kota').html(msg);
             ambil_kecInRPaset(kotaID,posting,kecID);
+        },
+        dataType: "html"
+    });
+}
+
+function ambil_kotaSearch(id,kecid,kelid){
+    $.ajax({
+        url: "http://localhost/potensi/index.php/kota/getKota/"+id,
+        success: function(msg){
+            $('.kota').html(msg);
+            ambil_kecSearch(kecid,kelid);
         },
         dataType: "html"
     });
@@ -76,13 +98,35 @@ function ambil_kec(id){
     });
 }
 
+function ambil_kecSearch(id,kelid){
+    $.ajax({        
+        url: "http://localhost/potensi/index.php/kecamatan/getKecamatan/"+id,
+        success: function(msg){
+            $('.kecamatan').html(msg);
+            ambil_kelSearch(id,kelid);
+        },
+        dataType: "html"
+    });
+}
+
             
 function ambil_kel(id){
     $.ajax({
         url: "http://localhost/potensi/index.php/kelurahan/getKelurahan/"+id,
         success: function(msg){
             $('.kelurahan').html(msg);
-            getNewAsetID(id)
+            getNewAsetID(id);
+        },
+        dataType: "html"
+    });
+}
+
+function ambil_kelSearch(id,kelID){
+    $.ajax({
+        url: "http://localhost/potensi/index.php/kelurahan/getKelurahanSearch/"+id+"/"+kelID,
+        success: function(msg){
+            $('.kelurahan').html(msg);
+            getNewAsetID(id);
         },
         dataType: "html"
     });
@@ -149,7 +193,7 @@ function getPropID(propID){
 }
 
 function showDetail(){
-    var id = document.getElementById("id").value 
+    var id = document.getElementById("id").value; 
     $.ajax({
        
        url: "http://localhost/potensi/index.php/search/detail/"+id,
@@ -167,20 +211,19 @@ function hideDetail(){
             $('.detail').html(msg);
         },
         dataType: "html"
-    })
+    });
 }
 
 function isExist(nama){
-    var id = document.getElementById("id").value
-    var jenis= document.getElementById("jenis").value
+    var id = document.getElementById("id").value;
+    var jenis= document.getElementById("jenis").value;
     
     $.ajax({
         url: "http://localhost/potensi/index.php/aset/cekAset/"+jenis+"/"+id+"/"+nama,
         success: function(msg){
             $('.exist').html(msg);
-            
         },
         dataType: "html"
-    })
+    });
 }
 

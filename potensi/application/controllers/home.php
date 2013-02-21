@@ -6,7 +6,7 @@
             parent::__construct();
             $this->load->model('Login_model','',TRUE);
             $this->load->model('Aset_model','',TRUE);
-            
+            $this->load->model('Search_model','',TRUE);
         }
         
         function index(){
@@ -30,7 +30,11 @@
                 if($this->Login_model->check_user($username,$password)==TRUE){
                     $level = $this->Login_model->check_level($username);
                     $nama = $this->Login_model->check_nama($username);
-                    $data = array('username'=>$nama->nama,'login' => TRUE,'level'=>$level->akses);
+                    $idUser = $this->Login_model->get_ID($username);
+                    $this->Search_model->delete($idUser->id);
+                    $data = array('username'=>$nama->nama
+                    		,'login' => TRUE,'level'=>$level->akses
+                    		,'userID' => $idUser->id);
                     $this->session->set_userdata($data);
                     redirect('rekap');
                 }else{

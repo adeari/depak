@@ -42,7 +42,10 @@
                     $jenis = $this->Jenis_model->getJenisAset();
                     foreach($jenis as $data){
                         $gol = $this->Golongan_model->getGolonganByID($data->golongan);
-                        echo '<option value="' . $data->kode_klasifikasi . '">' .$gol->golongan . ' - ' . $data->jenis . '</option>';
+                        if (strcmp($data->kode_klasifikasi,$jenisAset)==0)
+                        	echo '<option value="' . $data->kode_klasifikasi . '" selected>' .$gol->golongan . ' - ' . $data->jenis . '</option>';
+                        else
+                        	echo '<option value="' . $data->kode_klasifikasi . '">' .$gol->golongan . ' - ' . $data->jenis . '</option>';
                     }
                     ?>
                     </select>
@@ -56,7 +59,10 @@
                         <?php
                         $status = $this->Status_model->getStatusTanah();
                         foreach($status as $data){
-                            echo '<option value="' . $data->id . '">' . $data->status_tanah. '</option>';
+							if (strcmp($data->id,$statusAset)==0)
+								echo '<option value="' . $data->id . '" selected>' . $data->status_tanah. '</option>';
+							else
+                            	echo '<option value="' . $data->id . '">' . $data->status_tanah. '</option>';
                         }?>
                 </select>
                 </td>
@@ -68,7 +74,10 @@
                         <?php
                         $bukti = $this->Bukti_model->getBuktiMilik();
                         foreach($bukti as $data){
-                            echo '<option value="' . $data->id . '">' . $data->bukti_milik . '</option>';
+							if (strcmp($data->id,$buktiAset)==0)
+								echo '<option value="' . $data->id . '" selected>' . $data->bukti_milik . '</option>';
+							else
+                            	echo '<option value="' . $data->id . '">' . $data->bukti_milik . '</option>';
                         }
                         ?>
                 </select>
@@ -81,7 +90,10 @@
                         <?php
                         $pengelola = $this->Pengelola_model->getPengelola();
                         foreach($pengelola as $data){
-                            echo '<option value="' . $data->id . '">' . $data->pengelola . '</option>';
+							if (strcmp($data->id,$pengelolaAset)==0)
+								echo '<option value="' . $data->id . '" selected>' . $data->pengelola . '</option>';
+							else
+                            	echo '<option value="' . $data->id . '">' . $data->pengelola . '</option>';
                         }
                         ?>
                 </select>
@@ -101,6 +113,7 @@
 </form>
         
 <?php
+	
     if(!empty ($link)){
         echo '<p id="bottom_link">';
         foreach($link as $links){

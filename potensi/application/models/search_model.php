@@ -23,6 +23,16 @@ class Search_model extends CI_Model{
         $this->db->insert($this->table,$search);
     }
     
+    function isExist($id) {
+    	$exist = false;
+    	$this->db->select('*');
+    	$this->db->from($this->table);
+    	$this->db->limit(1,0);
+    	if ($this->db->get()->num_rows()>0)
+    		$exist = true;
+    	return $exist;
+    }
+    
     function update($id,$search){
         $this->db->where('id',$id);
         $this->db->update($this->table,$search);
@@ -39,6 +49,14 @@ class Search_model extends CI_Model{
         $this->db->order_by('id','desc');
         $this->db->limit(1,0);
         return $this->db->get()->row();
+    }
+    
+    function getSearchByID($id) {
+    	$this->db->select('propinsi,kota,kecamatan,kelurahan,ranting,jenis_aset,
+            status_tanah,bukti_milik,pengelola');
+    	$this->db->from($this->table);
+    	$this->db->where('id',$id);
+    	return $this->db->get()->result();
     }
     
     function getLastByID($id){
