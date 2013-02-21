@@ -38,7 +38,10 @@ class rpentry extends CI_Controller{
 			$data['title'] = $this->title;
 			$data['main_view'] = 'rpentry_view';
 			$perSonName = urldecode($this->uri->segment(3));
+			$data['idPerson'] = $perSonName;
+			$data['jenisReport'] = 'person';
 			$data['person'] = anchor('rpentry',$perSonName);
+			$data['linkExport'] = site_url("rpentry");
 			$data['total'] = number_format($this->Aset_model->getCountRekapEntrybyCreatedBY($perSonName),0,",",".");
 			
 			if ($this->Aset_model->getCountRekapEntry()>0) {
@@ -79,6 +82,8 @@ class rpentry extends CI_Controller{
 
 			$data['title'] = $this->title;
 			$data['main_view'] = 'rpentry_view';
+			$data['jenisReport'] = '1';
+			$data['idPerson'] = '';
 			
 			
 			if ($this->Aset_model->getCountRekapEntry()>0) {
@@ -111,65 +116,27 @@ class rpentry extends CI_Controller{
 
 	}
 
-	
-	function printDataHere(){
-		$PDFame = "AsetNU-";
-		$kondisi ="";
-		if (strlen($this->input->get("propinsi"))>0)
-		{
-			$kondisi .=" ".$this->input->get("propinsi");
-		}
-		if (strlen($this->input->get("kota"))>0)
-		{
-			$kondisi .=" ".$this->input->get("kota");
-			$PDFame .= str_replace(" ","_",
-					$this->Kota_model->getNamaKotaByKotaID($this->input->get("kota")))."-";
-		}
-		if (strlen($this->input->get("kecamatan"))>0)
-		{
-			$kondisi .=" ".$this->input->get("kecamatan");
-			$PDFame .= str_replace(" ","_",
-					$this->Kecamatan_model->getNamaKecamatanByKecamatanID($this->input->get("kecamatan")))."-";
-		}
-		$PDFame.=date('Ymd-Hi');
-		$java = "java -jar ".$this->config->config['directoryJarReport']
-		."reportNU.jar cetak "
-				.$this->config->config['directoryJarReport']." "
-						.$this->config->config['directoryPDFReport']." newaasetLaporan ".$PDFame.$kondisi;
-		
-		
-		exec ($java);
-	}
-
-
 	function createpdf(){
-		//(06:51:40 AM) Garuda Edwio: AsetNU-Kab.Blitar-Kec.Kademangan-20130212-0651
-		//(06:52:52 AM) Garuda Edwio: AsetNU-NamaKabupaten-NamaKecamatan-YYYYMMDD-HHMM
-		//(07:12:55 AM) Garuda Edwio: format 24 jam
-		$PDFame = "AsetNU-";
-		$kondisi ="";
-		if (strlen($this->input->get("propinsi"))>0)
-		{
-			$kondisi .=" ".$this->input->get("propinsi");
+		$jenis = $this->input->get("jenis");
+		$PDFame="";
+		if (strcmp($jenis,"1")==0) {
+			$PDFame = "rekapentry_".date('Ymd-Hi');
+			$java = "java -jar ".$this->config->config['directoryJarReport']
+			."reportNU.jar pdf "
+					.$this->config->config['directoryJarReport']." "
+							.$this->config->config['directoryPDFReport']." rekapEntry ".$PDFame;
+		} else if (strcmp($jenis,"person")==0) {
+			$person = urldecode($this->input->get("id"));
+			$Total = number_format($this->Aset_model->getCountRekapEntrybyCreatedBY($person),0,",",".");
+			
+			$PDFame = "rincianEntry_".str_replace(" ","_",$person)."_".date('Ymd-Hi');
+			$java = "java -jar ".$this->config->config['directoryJarReport']
+			."reportNU.jar pdf "
+					.$this->config->config['directoryJarReport']." "
+							.$this->config->config['directoryPDFReport']." rekapEntryPerson ".$PDFame." ".$Total." ".$person;
 		}
-		if (strlen($this->input->get("kota"))>0)
-		{
-			$kondisi .=" ".$this->input->get("kota");
-			$PDFame .= str_replace(" ","_",
-					$this->Kota_model->getNamaKotaByKotaID($this->input->get("kota")))."-";
-		}
-		if (strlen($this->input->get("kecamatan"))>0)
-		{
-			$kondisi .=" ".$this->input->get("kecamatan");
-			$PDFame .= str_replace(" ","_",
-					$this->Kecamatan_model->getNamaKecamatanByKecamatanID($this->input->get("kecamatan")))."-";
-		}
-		$PDFame.=date('Ymd-Hi');
-		$java = "java -jar ".$this->config->config['directoryJarReport']
-		."reportNU.jar pdf "
-				.$this->config->config['directoryJarReport']." "
-						.$this->config->config['directoryPDFReport']." newaasetLaporan ".$PDFame.$kondisi;
-
+		
+		
 		$path=$this->config->config['directoryPDFReport'];
 		$handle=opendir($path);
 		$dateNOW = date("Ymd");
@@ -184,6 +151,7 @@ class rpentry extends CI_Controller{
 			}
 		}
 		closedir($handle);
+		
 		exec ($java);
 		header('Content-type: application/pdf');
 		$ResultPDF = $this->config->config['directoryPDFReport'].$PDFame.".pdf";

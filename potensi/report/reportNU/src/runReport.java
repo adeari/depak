@@ -23,7 +23,8 @@ public class runReport {
             directoyPDF = args[2];
         }
 
-        String fileReport = "", qryData = "", thisCondition = "", pdfDestination = "";
+        String fileReport = "", qryData = "", thisCondition = "", pdfDestination = ""
+                ,forAwhile = "";
         java.util.Map parameter = new java.util.HashMap();
 
         fileReport = direktoryReport + args[3] + ".jasper";
@@ -117,6 +118,27 @@ public class runReport {
                     + "from newaset a "
                     + "inner join tbkelurahan b on a.kelid = b.kelurahanID where a.kecid =" + args[5]
                     + " group by a.kelid,b.namaKelurahan order by b.namaKelurahan";
+        } else if (args[3].equalsIgnoreCase("rekapEntry")) {
+            qryData = "select createdby,count(*) as jumlah,format(count(*),0) as jmlView "
+                    + " from newaset group by createdby order by createdby";
+        } else if (args[3].equalsIgnoreCase("rekapEntryPerson")) {
+            int i = 6;
+                boolean ada = true;
+                while (ada) {
+                    try {
+                        if (i<7)
+                            forAwhile += args[i];
+                        else
+                            forAwhile += " "+args[i];
+                        i++;
+                    } catch (Exception ex) {
+                        ada = false;
+                    }
+                }
+            qryData = "select DATE_FORMAT(created, '%d/%m/%Y') as created,"
+                    + "count(*) as jumlah,format(count(*),0) as jmlView "
+                    + "from newaset where createdby = '"
+                    +forAwhile+"' group by created order by created";
         }
         
         
@@ -218,6 +240,9 @@ public class runReport {
                     }
                 }
                 parameter.put("namaKecamatan", namaKecamatan);
+            } else if (args[3].equalsIgnoreCase("rekapEntryPerson")) {
+                parameter.put("person", forAwhile);
+                parameter.put("total", args[5]);
             }
             
             parameter.put("imgPath", direktoryReport + "logoNU.png");
