@@ -147,7 +147,6 @@ class Search extends CI_Controller{
                 if(!empty($kecamatanID)){
 
                     if(!empty($kelurahanID)){
-                        //echo $kelurahanID;
                         $asets = $this->Aset_model->getAllByKelurahan($this->limit,$offset,$kelurahanID,$ranting,$jenis,$status,$bukti,$pengelola);
                         $num_rows = $this->Aset_model->countAllByKelurahan($kelurahanID,$ranting,$jenis,$status,$bukti,$pengelola);
                         $rec = $this->Aset_model->countRowByKelurahan($this->limit,$offset,$kelurahanID,$ranting,$jenis,$status,$bukti,$pengelola);

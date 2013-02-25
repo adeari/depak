@@ -155,7 +155,7 @@ class rpentry extends CI_Controller{
 		exec ($java);
 		header('Content-type: application/pdf');
 		$ResultPDF = $this->config->config['directoryPDFReport'].$PDFame.".pdf";
-		header("Content-Disposition:attachment;filename=".$PDFame.".pdf");
+		header("Content-Disposition: inline; filename=".$PDFame.".pdf");
 		readfile($ResultPDF);
 	}
 }

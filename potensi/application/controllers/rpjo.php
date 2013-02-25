@@ -335,7 +335,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"rinciKabupaten")==0) {
 			$kabupatenID = $this->input->get("kabupatenID");
@@ -363,7 +363,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"rinciKecamatan")==0) {
 			$kecamatanID = $this->input->get("kecamatanID");
@@ -391,7 +391,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"rinciDesa")==0) {
 			$desaID = $this->input->get("desaID");
@@ -419,7 +419,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"diKabupaten")==0) {
 			$propinsiID = $this->input->get("propinsiID");
@@ -447,7 +447,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"diKecamatan")==0) {
 			$kabupatenID = $this->input->get("kabupatenID");
@@ -475,7 +475,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		} else if (strcmp($reportSelected,"diDesa")==0) {
 			$kecamatanID = $this->input->get("kecamatanID");
@@ -503,7 +503,7 @@ class rpjo extends CI_Controller{
 			exec($java);
 			header('Content-type: application/pdf');
 			$ResultPDF = $this->config->config['directoryPDFReport'].$pdfFile.".pdf";
-			header("Content-Disposition:attachment;filename=".$pdfFile.".pdf");
+			header("Content-Disposition: inline; filename=".$pdfFile.".pdf");
 			readfile($ResultPDF);
 		}
 	}

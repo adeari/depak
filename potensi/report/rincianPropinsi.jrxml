@@ -185,7 +185,22 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e4075bf3-3c67-438f-820d-791bf5b4e277" x="377" y="5" width="90" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hal. "+$V{PAGE_NUMBER}+"  dari "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="1ee51e0b-0250-4c34-af06-d5f3b494fad0" x="470" y="5" width="30" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

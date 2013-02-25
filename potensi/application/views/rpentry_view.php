@@ -22,7 +22,7 @@ function createPDF(){
 			<?php } ?>
 			+'?jenis=<?php echo $jenisReport; ?>'
 			+'&id=<?php echo $idPerson; ?>'
-			,'Report','width=200,height=100');
+			,'Report','width='+screen.width+',height='+screen.height);
 	myWindow.focus();
 }
 </script>
@@ -43,7 +43,7 @@ function createPDF(){
 	        </fieldset>
         <?php }?>
         <?php echo !empty($message) ? $message : ''; ?>
-        <div width="100%" align="center">
+        <div style="width:40%;margin-left: auto ;margin-right: auto ;text-align:center">
         	<?php echo !empty($table) ? $table : ''; ?>
         </div>
         <?php  echo !empty($pagination) ? '<p id="pagination">'.$pagination.'</p>' : ''; ?> 

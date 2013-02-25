@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rekapEntry" language="groovy" pageWidth="612" pageHeight="792" columnWidth="491" leftMargin="93" rightMargin="28" topMargin="36" bottomMargin="20" uuid="3c179472-7c29-4740-b215-5cf48fcc1534">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="240"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="qryData" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["select DATE_FORMAT(created, '%d/%m/%Y') as created,count(*) as jumlah,format(count(*),0) as jmlView from newaset group by created order by created"]]></defaultValueExpression>
@@ -155,7 +155,22 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement uuid="58b4b031-270b-41d2-8903-20ad78cfcd0f" x="260" y="5" width="90" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hal. "+$V{PAGE_NUMBER}+"  dari "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="245ba35f-27ad-48f3-b900-629685e50ed0" x="353" y="5" width="30" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

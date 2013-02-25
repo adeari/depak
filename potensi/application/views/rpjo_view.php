@@ -19,7 +19,7 @@ function createPDFRinciPropinsi(str){
 			'<?php echo $linkExport."/createpdf"; ?>'
 			+'?jenis=rinciPropinsi'
 			+'&propinsiID='+str
-			,'Report','width=200,height=100');
+			,'Report','width='+screen.width+',height='+screen.height);
 	myWindow.focus();
 }
 <?php } else if (strcmp($viewPage,"rincianKabupaten")==0) {  ?>
@@ -28,7 +28,7 @@ function createPDFRinciKabupaten(str){
 			'<?php echo $linkExport."/createpdf"; ?>'
 			+'?jenis=rinciKabupaten'
 			+'&kabupatenID='+str
-			,'Report','width=200,height=100');
+			,'Report','width='+screen.width+',height='+screen.height);
 	myWindow.focus();
 }
 <?php } else if (strcmp($viewPage,"rincianKecamatan")==0) {  ?>
@@ -37,7 +37,7 @@ function createPDFRinciKecamatan(str){
 			'<?php echo $linkExport."/createpdf"; ?>'
 			+'?jenis=rinciKecamatan'
 			+'&kecamatanID='+str
-			,'Report','width=200,height=100');
+			,'Report','width='+screen.width+',height='+screen.height);
 	myWindow.focus();
 }
 <?php } else if (strcmp($viewPage,"rincianDesa")==0) {  ?>
@@ -46,7 +46,7 @@ function createPDFRinciDesa(str){
 				'<?php echo $linkExport."/createpdf"; ?>'
 				+'?jenis=rinciDesa'
 				+'&desaID='+str
-				,'Report','width=200,height=100');
+				,'Report','width='+screen.width+',height='+screen.height);
 		myWindow.focus();	
 }
 <?php } else if (strcmp($viewPage,"levelKabupaten")==0) {  ?>
@@ -55,7 +55,7 @@ function perKabupaten(str){
 				'<?php echo $linkExport."/createpdf"; ?>'
 				+'?jenis=diKabupaten'
 				+'&propinsiID='+str
-				,'Report','width=200,height=100');
+				,'Report','width='+screen.width+',height='+screen.height);
 		myWindow.focus();	
 }
 <?php } else if (strcmp($viewPage,"levelKecamatan")==0) {  ?>
@@ -64,7 +64,7 @@ function perKecamatan(str){
 				'<?php echo $linkExport."/createpdf"; ?>'
 				+'?jenis=diKecamatan'
 				+'&kabupatenID='+str
-				,'Report','width=200,height=100');
+				,'Report','width='+screen.width+',height='+screen.height);
 		myWindow.focus();	
 }
 <?php } else if (strcmp($viewPage,"levelDesa")==0) {  ?>
@@ -73,7 +73,7 @@ function perDesa(str){
 				'<?php echo $linkExport."/createpdf"; ?>'
 				+'?jenis=diDesa'
 				+'&kecamatanID='+str
-				,'Report','width=200,height=100');
+				,'Report','width='+screen.width+',height='+screen.height);
 		myWindow.focus();	
 }
 <?php }  ?>
@@ -91,83 +91,71 @@ function perDesa(str){
 	        <br>
         	<?php echo $jmlObjekPerkabupaten;?>  
         <?php } else if (strcmp($viewPage,"rincianPropinsi")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;">Rincian Jumlah masing-masing obyek di Propinsi <?php echo $namaPropinsi;?></div>
+         	<div style="float:left;margin-right:25px;">Rincian Jumlah masing-masing obyek di Propinsi <?php echo $namaPropinsi;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div style="float:right;"><button onClick="createPDFRinciPropinsi(<?php echo $propinsiID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="float:left;margin-bottom:5px;"><button onClick="createPDFRinciPropinsi(<?php echo $propinsiID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>
 	        <?php if (!empty($table)) { ?>		        
-		        <div width="100%" align="center">
+		        <div style="float:left;width:100%;text-align:center">
 	        		<?php echo $table; ?>
 	        	</div>
 	        <?php } else echo !empty($message) ? $message : ''; ?>
         <?php } else if (strcmp($viewPage,"levelKabupaten")==0) {  ?>
         <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;margin-right:150px">Rekap jumlah obyek Per Kabupaten di Propinsi <?php echo $namaPropinsi;?></div>
+         	<div style="float:left;margin-right:5px">Rekap jumlah obyek Per Kabupaten di Propinsi <?php echo $namaPropinsi;?></div>
          	<?php if (!empty($table)) { ?>
          	<div><button onClick="perKabupaten(<?php echo $propinsiID?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
         </div>
 	        <?php echo !empty($message) ? $message : ''; ?>
-	        <div width="100%" align="center">
+	        <div style="width:40%;margin-left: auto ;margin-right: auto ;text-align:center">
         		<?php echo !empty($table) ? $table : ''; ?>
         	</div>
         <?php } else if (strcmp($viewPage,"rincianKabupaten")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;">Rincian Jumlah masing-masing obyek di <?php echo $namaKabupaten;?></div>
+         	<div style="float:left;margin-right:5px;">Rincian Jumlah masing-masing obyek di <?php echo $namaKabupaten;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div style="float:right;"><button onClick="createPDFRinciKabupaten(<?php echo $kabupatenID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="margin-bottom:5px;"><button onClick="createPDFRinciKabupaten(<?php echo $kabupatenID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>
 	        <?php if (!empty($table)) { ?>
-		        <div width="100%" align="center">
+		        <div style="width:70%;margin-left: auto ;margin-right: auto ;text-align:center">
 	        		<?php echo $table; ?>
 	        	</div>
 	        <?php } else echo !empty($message) ? $message : ''; ?>
         <?php } else if (strcmp($viewPage,"levelKecamatan")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;margin-right:150px">Rekap jumlah obyek Per Kecamatan di <?php echo $namaKabupaten;?></div>
+         	<div style="float:left;margin-right:5px">Rekap jumlah obyek Per Kecamatan di <?php echo $namaKabupaten;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div><button onClick="perKecamatan(<?php echo $kabupatenID?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="margin-bottom:5px;"><button onClick="perKecamatan(<?php echo $kabupatenID?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>
 	        <?php echo !empty($message) ? $message : ''; ?>
-	        <div width="100%" align="center">
+	        <div style="width:40%;margin-left: auto ;margin-right: auto ;text-align:center">
         		<?php echo !empty($table) ? $table : ''; ?>
         	</div>
         <?php } else if (strcmp($viewPage,"rincianKecamatan")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;">Rincian Jumlah masing-masing obyek di <?php echo $namaKecamatan;?></div>
+         	<div style="float:left;margin-right:5px">Rincian Jumlah masing-masing obyek di <?php echo $namaKecamatan;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div style="float:right;"><button onClick="createPDFRinciKecamatan(<?php echo $kecamatanID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="margin-bottom:5px;"><button onClick="createPDFRinciKecamatan(<?php echo $kecamatanID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>         	
 	        <?php if (!empty($table)) { ?>
-		        <div width="100%" align="center">
+		        <div style="width:70%;margin-left: auto ;margin-right: auto ;text-align:center">
 	        		<?php echo $table; ?>
 	        	</div>
 	        <?php } else echo !empty($message) ? $message : ''; ?>
         <?php } else if (strcmp($viewPage,"levelDesa")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;margin-right:220px">Rekap jumlah obyek Per Desa di <?php echo $namaKecamatan;?></div>
+         	<div style="float:left;margin-right:5px">Rekap jumlah obyek Per Desa di <?php echo $namaKecamatan;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div><button onClick="perDesa(<?php echo $kecamatanID?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="margin-bottom:5px;"><button onClick="perDesa(<?php echo $kecamatanID?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>
 	        <?php echo !empty($message) ? $message : ''; ?>
-	        <div width="100%" align="center">
+	        <div style="width:70%;margin-left: auto ;margin-right: auto ;text-align:center">
         		<?php echo !empty($table) ? $table : ''; ?>
         	</div>
         <?php } else if (strcmp($viewPage,"rincianDesa")==0) {  ?>
-        <div style='margin-bottom:5px;width:100%;vertical-align:middle'>
-         	<div style="float:left;">Rincian Jumlah masing-masing obyek di Desa <?php echo $namaDesa;?></div>
+         	<div style="float:left;margin-right:5px">Rincian Jumlah masing-masing obyek di Desa <?php echo $namaDesa;?></div>
          	<?php if (!empty($table)) { ?>
-         	<div style="float:right;"><button onClick="createPDFRinciDesa(<?php echo $desaID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
+         	<div style="margin-bottom:5px;"><button onClick="createPDFRinciDesa(<?php echo $desaID;?>)" style="vertical-align:middle"><img src="<?php echo base_url(); ?>images/pdfIcon.jpg" style="height:18px;width:18px"> Export PDF</button></div>
          	<?php } ?>
-        </div>  
 	        <?php if (!empty($table)) { ?>
-		        <div width="100%" align="center">
+		        <div style="width:70%;margin-left: auto ;margin-right: auto ;text-align:center">
 	        		<?php echo $table; ?>
 	        	</div>
 	        <?php } else echo !empty($message) ? $message : ''; ?>

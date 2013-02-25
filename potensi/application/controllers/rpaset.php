@@ -256,13 +256,13 @@ class rpaset extends CI_Controller{
 		if (strlen($this->input->get("kota"))>0)
 		{
 			$kondisi .=" ".$this->input->get("kota");
-			$PDFame .= str_replace(" ","_",
+			$PDFame .= str_replace(" ","-",
 					$this->Kota_model->getNamaKotaByKotaID($this->input->get("kota")))."-";
 		}
 		if (strlen($this->input->get("kecamatan"))>0)
 		{
 			$kondisi .=" ".$this->input->get("kecamatan");
-			$PDFame .= str_replace(" ","_",
+			$PDFame .= str_replace(" ","-",
 					$this->Kecamatan_model->getNamaKecamatanByKecamatanID($this->input->get("kecamatan")))."-";
 		}
 		$PDFame.=date('Ymd-Hi');
@@ -289,13 +289,13 @@ class rpaset extends CI_Controller{
 		if (strlen($this->input->get("kota"))>0)
 		{
 			$kondisi .=" ".$this->input->get("kota");
-			$PDFame .= str_replace(" ","_",
+			$PDFame .= str_replace(" ","-",
 					$this->Kota_model->getNamaKotaByKotaID($this->input->get("kota")))."-";
 		}
 		if (strlen($this->input->get("kecamatan"))>0)
 		{
 			$kondisi .=" ".$this->input->get("kecamatan");
-			$PDFame .= str_replace(" ","_",
+			$PDFame .= str_replace(" ","-",
 					$this->Kecamatan_model->getNamaKecamatanByKecamatanID($this->input->get("kecamatan")))."-";
 		}
 		$PDFame.=date('Ymd-Hi');
@@ -306,7 +306,7 @@ class rpaset extends CI_Controller{
 
 		$path=$this->config->config['directoryPDFReport'];
 		$handle=opendir($path);
-		$dateNOW = date("Ymd");
+		$dateNOW = "-".date("Ymd");
 		while (($file = readdir($handle))!==false) {
 			$truFILe = $path.$file;
 			$filesDAte = substr($file,(strlen($file)-17),8);
@@ -321,7 +321,7 @@ class rpaset extends CI_Controller{
 		exec ($java);
 		header('Content-type: application/pdf');
 		$ResultPDF = $this->config->config['directoryPDFReport'].$PDFame.".pdf";
-		header("Content-Disposition:attachment;filename=".$PDFame.".pdf");
+		header("Content-Disposition: inline; filename=".$PDFame.".pdf");
 		readfile($ResultPDF);
 	}
 }
